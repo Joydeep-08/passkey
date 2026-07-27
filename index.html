@@ -487,7 +487,8 @@ async function onPaymentSuccess(paymentId) {
 
   try {
     await withRetry(() => saveCardToSupabase(state.draftId, cardData));
-    const url = `${location.origin}${location.href.replace(/[^/]*$/, '')}${CONFIG.VIEW_PAGE}?id=${state.draftId}`;
+    const dir = location.pathname.replace(/[^/]*$/, '');
+    const url = `${location.origin}${dir}${CONFIG.VIEW_PAGE}?id=${state.draftId}`;
     state.shareUrl = url;
 
     try { localStorage.removeItem('gfday_lastPaymentId'); } catch(e) {}
