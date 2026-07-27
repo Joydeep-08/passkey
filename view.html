@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A Surprise For You 💕</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Caveat:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #fdf2f4; min-height: 100vh; }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  .spin { animation: spin 0.8s linear infinite; }
+  #state-loading, #state-error {
+    display: flex; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; text-align: center; padding: 24px;
+  }
+  #state-error { display: none; }
+  .btn-primary {
+    padding: 12px 32px; border-radius: 30px; font-size: 13px;
+    font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; border: 2.5px solid #b83b5e; background: #b83b5e; color: #fff;
+    font-family: 'Inter', sans-serif;
+  }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:#fdf2f4; }
+  ::-webkit-scrollbar-thumb { background:#f0c4ce; border-radius:3px; }
+</style>
+</head>
+<body>
+
+<div id="state-loading">
+  <div style="font-size:48px">💌</div>
+  <div style="font-family:'Dancing Script',cursive;font-size:32px;color:#1a0f0a">Loading your surprise...</div>
+  <div style="width:36px;height:36px;border:3px solid #f0c4ce;border-top-color:#b83b5e;border-radius:50%" class="spin"></div>
+</div>
+
+<div id="state-error">
+  <div style="font-size:44px">💔</div>
+  <div style="font-family:'Dancing Script',cursive;font-size:28px;color:#1a0f0a">This link isn't valid</div>
+  <p style="color:#b8718a;font-size:14px;max-width:360px">The surprise you're looking for doesn't exist or the link is incomplete. Double-check the link you were sent.</p>
+</div>
+
+<div id="exp-mount"></div>
+
+<script src="experience.js"></script>
+<script>
+const CONFIG = {
+  SUPABASE_URL: 'https://iliakhaufgpjjtwamisn.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlsaWFraGF1Zmdwamp0d2FtaXNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTU0NTMsImV4cCI6MjA5NjQzMTQ1M30.nim8jt-cUhb3IIWjnd0FC3NF6xS_gg8RelBBJG1bIno',
+  SUPABASE_TABLE: 'gf_day_cards',
+};
+
+async function loadCard(id) {
+  const res = await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/${CONFIG.SUPABASE_TABLE}?id=eq.${encodeURIComponent(id)}&select=data`, {
+    headers: { 'apikey': CONFIG.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}` },
+  });
+  if (!res.ok) throw new Error('Load failed: ' + res.status);
+  const rows = await res.json();
+  if (!rows || !rows.length) throw new Error('Card not found');
+  return rows[0].data;
+}
+
+function showError() {
+  document.getElementById('state-loading').style.display = 'none';
+  document.getElementById('state-error').style.display = 'flex';
+}
+
+window.addEventListener('load', async () => {
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  if (!id) { showError(); return; }
+
+  try {
+    const data = await loadCard(id);
+    document.getElementById('state-loading').style.display = 'none';
+    renderExperience(document.getElementById('exp-mount'), data, { preview: false });
+  } catch (e) {
+    console.error(e);
+    showError();
+  }
+});
+</script>
+</body>
+</html>

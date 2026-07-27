@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Girlfriend's Day 💕 — Make One</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Caveat:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #fdf2f4; min-height: 100vh; }
+  .font-dancing { font-family: 'Dancing Script', cursive; }
+  .font-caveat  { font-family: 'Caveat', cursive; }
+
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: flex; flex-direction: column; }
+
+  @keyframes fadeIn  { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes spin    { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes pulse   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+  .fade-in    { animation: fadeIn 0.45s ease both; }
+  .spin       { animation: spin 0.8s linear infinite; }
+  .pulse-btn  { animation: pulse 2s ease-in-out infinite; }
+
+  .watermark-wrap {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+    display: flex; flex-direction: column; justify-content: space-around; overflow: hidden;
+  }
+  .watermark-row {
+    display: flex; gap: 100px; white-space: nowrap;
+    font-family: 'Inter', sans-serif; font-weight: 700;
+    font-size: 17px; letter-spacing: 5px; color: #b83b5e; opacity: 0.11;
+  }
+  .watermark-row:nth-child(odd) { transform: rotate(-22deg) translateX(-60px); }
+  .watermark-row:nth-child(even){ transform: rotate(-22deg) translateX(60px); }
+
+  .btn-primary {
+    padding: 12px 32px; border-radius: 30px; font-size: 13px;
+    font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; border: 2.5px solid #b83b5e;
+    background: #b83b5e; color: #fff;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #93304c; transform: scale(1.03); }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .btn-outline {
+    padding: 12px 32px; border-radius: 30px; font-size: 13px;
+    font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; border: 2.5px solid #b83b5e;
+    background: transparent; color: #b83b5e;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { background: #b83b5e; color: #fff; transform: scale(1.03); }
+
+  .card { background:#fffaf9; border:1.5px solid #f0c4ce; border-radius:16px; }
+
+  .modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .modal-box { background:#fffaf9; border:1.5px solid #f0c4ce; border-radius:20px; width:100%; max-width:420px; padding:36px 32px; position:relative; font-family:'Inter',sans-serif; max-height:90vh; overflow-y:auto; }
+
+  .inp {
+    width:100%; padding:10px 14px; border-radius:10px;
+    border:1.5px solid #f0c4ce; background:#fffdfc;
+    font-size:14px; color:#1a0f0a; outline:none;
+    font-family:'Inter',sans-serif; transition:border-color 0.2s;
+  }
+  .inp:focus { border-color: #b83b5e; }
+
+  .pin-box { width:48px; height:56px; text-align:center; font-size:22px; letter-spacing:0; }
+
+  .share-banner { background:#2e7d32; color:#fff; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; font-family:'Inter',sans-serif; }
+
+  .photo-slot {
+    border: 2px dashed #f0c4ce; border-radius: 14px; aspect-ratio: 1/1;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    background:#fffdfc; position:relative; overflow:hidden; transition:border-color .2s;
+  }
+  .photo-slot:hover { border-color:#b83b5e; }
+  .photo-slot img { width:100%; height:100%; object-fit:cover; }
+  .photo-slot .remove-x {
+    position:absolute; top:4px; right:4px; width:22px; height:22px; border-radius:50%;
+    background:rgba(0,0,0,0.55); color:#fff; display:flex; align-items:center; justify-content:center;
+    font-size:14px; cursor:pointer;
+  }
+
+  #pg-loading { display:none; align-items:center; justify-content:center; min-height:100vh; background:#fdf2f4; flex-direction:column; gap:16px; }
+  #pg-loading.active { display:flex; }
+
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:#fdf2f4; }
+  ::-webkit-scrollbar-thumb { background:#f0c4ce; border-radius:3px; }
+</style>
+</head>
+<body>
+
+<div id="pg-loading">
+  <div style="font-size:48px">💕</div>
+  <div class="font-dancing" style="font-size:32px;color:#1a0f0a" id="loading-text">Loading...</div>
+  <div style="width:36px;height:36px;border:3px solid #f0c4ce;border-top-color:#b83b5e;border-radius:50%" class="spin"></div>
+</div>
+
+<!-- PAGE 1 — FORM -->
+<div class="page" id="pg-form">
+  <div class="flex items-center justify-center min-h-screen p-6">
+    <div class="card w-full max-w-lg p-10 fade-in my-10">
+      <div class="mb-8">
+        <div class="font-dancing text-5xl text-[#1a0f0a] leading-tight mb-1">Make Her Girlfriend's Day 💕</div>
+        <p class="text-[#b8718a] text-sm mt-2">A locked, unwrap-it-scene-by-scene surprise. Fill this in, preview it, then pay ₹99 for a shareable link.</p>
+      </div>
+      <div class="space-y-5">
+        <div>
+          <label class="block text-xs font-semibold text-[#8a4a5c] uppercase tracking-wider mb-2">Her Name *</label>
+          <input id="f-recipient" class="inp" placeholder="e.g. Priya" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-[#8a4a5c] uppercase tracking-wider mb-2">Your Name *</label>
+          <input id="f-sender" class="inp" placeholder="e.g. Rohan" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#8a4a5c] uppercase tracking-wider mb-2">4-Digit Passcode *</label>
+          <div class="flex gap-2">
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]" class="inp pin-box" data-pin-idx="0" />
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]" class="inp pin-box" data-pin-idx="1" />
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]" class="inp pin-box" data-pin-idx="2" />
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]" class="inp pin-box" data-pin-idx="3" />
+          </div>
+          <p class="text-[11px] text-[#cda5ae] mt-1">She'll need to enter this to unlock the surprise.</p>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-[#8a4a5c] uppercase tracking-wider mb-2">Passcode Hint <span class="normal-case font-normal text-[#cda5ae]">(optional)</span></label>
+          <input id="f-hint" class="inp" placeholder="e.g. our anniversary date" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#8a4a5c] uppercase tracking-wider mb-2">3 Photos *</label>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="photo-slot" id="slot-0" onclick="pickPhoto(0)"><span class="text-xs text-[#cda5ae] px-2 text-center">Photo 1<br><span class="text-[10px]">(lock screen)</span></span></div>
+            <div class="photo-slot" id="slot-1" onclick="pickPhoto(1)"><span class="text-xs text-[#cda5ae] px-2 text-center">Photo 2</span></div>
+            <div class="photo-slot" id="slot-2" onclick="pickPhoto(2)"><span class="text-xs text-[#cda5ae] px-2 text-center">Photo 3</span></div>
+          </div>
+          <input type="file" id="file-input" accept="image/*" class="hidden" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#8a4a5c] uppercase tracking-wider mb-2">Her Final Message / Letter *</label>
+          <textarea id="f-message" class="inp" rows="6" style="resize:vertical">There are people in this world who make everything better just by existing — and you are one of them.
+
+Happy Girlfriend's Day. I love you, from the bottom of my heart.</textarea>
+        </div>
+
+        <div id="form-err" class="text-[#c62828] text-sm hidden">Please fill in both names, a 4-digit passcode, and all 3 photos.</div>
+        <button class="btn-primary w-full mt-2 pulse-btn" onclick="gotoPreview()">Preview My Surprise →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2 — PREVIEW -->
+<div class="page" id="pg-preview">
+  <div class="flex items-center justify-between flex-wrap gap-3 px-5 py-3 bg-[#fffaf9] border-b border-[#f0c4ce] sticky top-0 z-20">
+    <div>
+      <div class="text-[10px] text-[#b8718a] uppercase tracking-widest">Preview mode</div>
+      <div class="text-sm text-[#5a1f33] font-medium">This is how her surprise will look ✨</div>
+    </div>
+    <div class="flex gap-2">
+      <button class="btn-outline text-xs px-4 py-2" onclick="showPage('pg-form')">← Edit</button>
+      <button class="btn-primary text-xs px-4 py-2" onclick="startGenerateLink()">🔗 Generate Link — ₹99</button>
+    </div>
+  </div>
+  <div id="share-banner" class="share-banner hidden">
+    <span class="text-sm">🎉 Your link is ready! Share it with her.</span>
+    <div class="flex gap-2 items-center">
+      <code id="share-url-text" class="text-xs bg-white/20 px-2 py-1 rounded"></code>
+      <button onclick="copyLink()" class="bg-white text-[#2e7d32] text-xs font-bold px-3 py-1 rounded-lg">Copy</button>
+    </div>
+  </div>
+  <div class="watermark-wrap" id="watermark">
+    <div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div>
+    <div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div>
+    <div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div>
+    <div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div>
+    <div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div>
+    <div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div>
+  </div>
+  <div id="preview-mount" style="min-height:100vh"></div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-bg hidden" id="pay-modal">
+  <div class="modal-box fade-in">
+    <button onclick="closePayModal()" class="absolute top-4 right-4 text-2xl text-[#b8718a] bg-none border-none cursor-pointer leading-none">×</button>
+    <div class="mb-6">
+      <div class="font-dancing text-3xl text-[#1a0f0a] mb-1">Generate Shareable Link 🔗</div>
+      <p class="text-xs text-[#b8718a]">Pay once — she gets a beautiful, locked surprise, forever.</p>
+    </div>
+    <div class="card px-5 py-4 mb-5 flex justify-between items-center">
+      <div>
+        <div class="text-sm text-[#b8718a]">Girlfriend's Day Surprise</div>
+        <div class="text-xs text-[#cda5ae] mt-0.5">Shareable link • Hosted forever</div>
+      </div>
+      <div class="text-right">
+        <div id="original-price" class="text-xs text-[#cda5ae] line-through hidden">₹99</div>
+        <div id="final-price" class="text-2xl font-bold text-[#b83b5e]">₹99</div>
+      </div>
+    </div>
+    <div class="mb-5">
+      <label class="block text-xs font-semibold text-[#8a4a5c] uppercase tracking-wider mb-2">Coupon Code</label>
+      <div class="flex gap-2">
+        <input id="coupon-inp" class="inp flex-1" placeholder=" Optional " style="text-transform:uppercase"
+          oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')applyCoupon()" />
+        <button onclick="applyCoupon()" class="btn-outline text-xs px-4 py-2 whitespace-nowrap">Apply</button>
+      </div>
+      <div id="coupon-msg" class="text-xs mt-2 font-medium hidden"></div>
+    </div>
+    <div id="pay-err" class="text-[#c62828] text-sm mb-3 hidden"></div>
+    <button id="pay-btn" class="btn-primary w-full" onclick="handlePay()">Pay ₹99 &amp; Get Link</button>
+    <div class="text-center text-[10px] text-[#cda5ae] mt-4">Secured by Razorpay · UPI, Cards, Netbanking</div>
+  </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<!-- Shared multi-scene experience renderer (also used by view.html) -->
+<script src="experience.js"></script>
+
+<script>
+/*
+  ── ONE-TIME SUPABASE SETUP (run in SQL editor) ──
+  create table gf_day_cards (
+    id uuid primary key,
+    data jsonb not null,
+    created_at timestamptz default now()
+  );
+  alter table gf_day_cards enable row level security;
+  create policy "public insert" on gf_day_cards for insert to anon with check (true);
+  create policy "public read"   on gf_day_cards for select to anon using (true);
+
+  -- Storage: create a PUBLIC bucket named "gf-day-photos" in the dashboard, then:
+  create policy "public upload gf-day-photos" on storage.objects
+    for insert to anon with check (bucket_id = 'gf-day-photos');
+  create policy "public read gf-day-photos" on storage.objects
+    for select to anon using (bucket_id = 'gf-day-photos');
+*/
+const CONFIG = {
+  RZP_KEY: 'rzp_live_SmizRaPApu81ZS',
+  SUPABASE_URL: 'https://iliakhaufgpjjtwamisn.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlsaWFraGF1Zmdwamp0d2FtaXNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTU0NTMsImV4cCI6MjA5NjQzMTQ1M30.nim8jt-cUhb3IIWjnd0FC3NF6xS_gg8RelBBJG1bIno',
+  SUPABASE_TABLE: 'gf_day_cards',
+  SUPABASE_BUCKET: 'gf-day-photos',
+  VIEW_PAGE: 'view.html',
+  COUPONS: {
+    'LOVE':  { amount: 7900, label: '₹20 off — you pay ₹79' },
+    'FEIN1': { amount: 100,  label: '₹98 off — you pay ₹1'  },
+    'FEIN':  { amount: 0,    label: '100% off — FREE 🎉'    },
+  },
+  BASE: 9900,
+};
+
+let state = {
+  recipient: '', sender: '', passcode: '', hint: '', message: '',
+  photoFiles: [null, null, null],
+  photoPreviewUrls: [null, null, null],
+  finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null,
+  draftId: null,
+};
+
+let activeSlot = null;
+
+function showLoading(text) {
+  if (text) document.getElementById('loading-text').textContent = text;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-loading').classList.add('active');
+}
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-loading').classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ── PHOTO PICKING ── */
+function pickPhoto(idx) {
+  activeSlot = idx;
+  document.getElementById('file-input').click();
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('file-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file || activeSlot === null) return;
+    state.photoFiles[activeSlot] = file;
+    const url = URL.createObjectURL(file);
+    state.photoPreviewUrls[activeSlot] = url;
+    const slot = document.getElementById('slot-' + activeSlot);
+    slot.innerHTML = `<img src="${url}" /><div class="remove-x" onclick="event.stopPropagation();removePhoto(${activeSlot})">✕</div>`;
+    e.target.value = '';
+  });
+
+  // PIN box auto-advance
+  document.querySelectorAll('.pin-box').forEach((box, i, all) => {
+    box.addEventListener('input', () => {
+      box.value = box.value.replace(/[^0-9]/g, '');
+      if (box.value && i < all.length - 1) all[i + 1].focus();
+    });
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !box.value && i > 0) all[i - 1].focus();
+    });
+  });
+});
+function removePhoto(idx) {
+  state.photoFiles[idx] = null;
+  state.photoPreviewUrls[idx] = null;
+  const labels = ['Photo 1<br><span class="text-[10px]">(lock screen)</span>', 'Photo 2', 'Photo 3'];
+  document.getElementById('slot-' + idx).innerHTML = `<span class="text-xs text-[#cda5ae] px-2 text-center">${labels[idx]}</span>`;
+}
+
+/* ── FORM → PREVIEW ── */
+function gotoPreview() {
+  const r = document.getElementById('f-recipient').value.trim();
+  const s = document.getElementById('f-sender').value.trim();
+  const pinDigits = Array.from(document.querySelectorAll('.pin-box')).map(b => b.value).join('');
+  const hint = document.getElementById('f-hint').value.trim();
+  const message = document.getElementById('f-message').value.trim();
+  const photosOk = state.photoFiles.every(f => f);
+
+  if (!r || !s || pinDigits.length !== 4 || !photosOk || !message) {
+    document.getElementById('form-err').classList.remove('hidden');
+    return;
+  }
+  document.getElementById('form-err').classList.add('hidden');
+
+  state.recipient = r; state.sender = s; state.passcode = pinDigits;
+  state.hint = hint; state.message = message;
+
+  renderExperience(document.getElementById('preview-mount'), {
+    recipient: r, sender: s, passcode: pinDigits, hint,
+    message, photos: state.photoPreviewUrls,
+  }, { preview: true });
+
+  document.getElementById('share-banner').classList.add('hidden');
+  document.getElementById('watermark').style.display = 'flex';
+  showPage('pg-preview');
+}
+
+/* ── SUPABASE HELPERS ── */
+async function uploadPhoto(file, id, index) {
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+  const path = `${id}/photo${index}.${ext}`;
+  const res = await fetch(`${CONFIG.SUPABASE_URL}/storage/v1/object/${CONFIG.SUPABASE_BUCKET}/${path}`, {
+    method: 'POST',
+    headers: {
+      'apikey': CONFIG.SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+      'Content-Type': file.type || 'image/jpeg',
+      'x-upsert': 'true',
+    },
+    body: file,
+  });
+  if (!res.ok) { const t = await res.text().catch(()=>''); throw new Error('Photo upload failed: ' + res.status + ' ' + t); }
+  return `${CONFIG.SUPABASE_URL}/storage/v1/object/public/${CONFIG.SUPABASE_BUCKET}/${path}`;
+}
+
+async function saveCardToSupabase(id, cardData) {
+  const res = await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/${CONFIG.SUPABASE_TABLE}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': CONFIG.SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+      'Prefer': 'return=minimal',
+    },
+    body: JSON.stringify({ id, data: cardData }),
+  });
+  if (!res.ok) { const t = await res.text().catch(()=>''); throw new Error('Save failed: ' + res.status + ' ' + t); }
+}
+
+async function withRetry(fn, attempts = 4) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try { return await fn(); }
+    catch (e) { lastErr = e; await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i))); }
+  }
+  throw lastErr;
+}
+
+/* ── GENERATE LINK: upload photos first, then open payment ── */
+async function startGenerateLink() {
+  try {
+    showLoading('Preparing your photos...');
+    if (!state.draftId) state.draftId = (crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now());
+    state.uploadedPhotoUrls = [];
+    for (let i = 0; i < 3; i++) {
+      const url = await withRetry(() => uploadPhoto(state.photoFiles[i], state.draftId, i + 1));
+      state.uploadedPhotoUrls.push(url);
+    }
+    showPage('pg-preview');
+    openPayModal();
+  } catch (e) {
+    console.error(e);
+    showPage('pg-preview');
+    alert('Could not upload photos. Please check your connection and try again.');
+  }
+}
+
+/* ── MODAL ── */
+function openPayModal() {
+  state.finalAmount = CONFIG.BASE;
+  state.couponApplied = null;
+  document.getElementById('coupon-inp').value = '';
+  document.getElementById('coupon-msg').classList.add('hidden');
+  document.getElementById('pay-err').classList.add('hidden');
+  document.getElementById('original-price').classList.add('hidden');
+  document.getElementById('final-price').textContent = '₹99';
+  document.getElementById('pay-btn').disabled = false;
+  document.getElementById('pay-btn').textContent = 'Pay ₹99 & Get Link';
+  document.getElementById('pay-modal').classList.remove('hidden');
+}
+function closePayModal() { document.getElementById('pay-modal').classList.add('hidden'); }
+
+/* ── COUPON ── */
+function applyCoupon() {
+  const code = document.getElementById('coupon-inp').value.trim().toUpperCase();
+  const msg  = document.getElementById('coupon-msg');
+  const fp   = document.getElementById('final-price');
+  const op   = document.getElementById('original-price');
+  const btn  = document.getElementById('pay-btn');
+  msg.classList.remove('hidden');
+
+  if (!code) { msg.textContent = ''; msg.classList.add('hidden'); return; }
+
+  const coupon = CONFIG.COUPONS[code];
+  if (!coupon) {
+    msg.textContent = '✗ Invalid coupon code'; msg.style.color = '#c62828';
+    state.finalAmount = CONFIG.BASE; state.couponApplied = null;
+    op.classList.add('hidden'); fp.textContent = '₹99';
+    btn.textContent = 'Pay ₹99 & Get Link';
+    return;
+  }
+
+  state.finalAmount = coupon.amount;
+  state.couponApplied = code;
+  msg.textContent = '✓ ' + coupon.label; msg.style.color = '#2e7d32';
+
+  const display = coupon.amount === 0 ? 'FREE' : '₹' + (coupon.amount / 100);
+  fp.textContent = display;
+  if (coupon.amount < CONFIG.BASE) op.classList.remove('hidden');
+  btn.textContent = coupon.amount === 0 ? 'Get Link for FREE' : `Pay ${display} & Get Link`;
+}
+
+/* ── PAY ── */
+function handlePay() {
+  document.getElementById('pay-err').classList.add('hidden');
+
+  if (state.finalAmount === 0) {
+    onPaymentSuccess('free_' + Math.random().toString(36).slice(2));
+    return;
+  }
+
+  const options = {
+    key: CONFIG.RZP_KEY, amount: state.finalAmount, currency: 'INR',
+    name: "Girlfriend's Day", description: `Surprise for ${state.recipient}`,
+    notes: { coupon: state.couponApplied || '', recipient: state.recipient, sender: state.sender },
+    theme: { color: '#b83b5e' },
+    handler: function(response) {
+      try { localStorage.setItem('gfday_lastPaymentId', response.razorpay_payment_id); } catch(e) {}
+      onPaymentSuccess(response.razorpay_payment_id);
+    },
+  };
+  new Razorpay(options).open();
+}
+
+/* ── POST PAYMENT: save DB row referencing already-uploaded photos ── */
+async function onPaymentSuccess(paymentId) {
+  const btn = document.getElementById('pay-btn');
+  const err = document.getElementById('pay-err');
+  err.classList.add('hidden');
+  btn.disabled = true;
+  btn.textContent = 'Generating your link...';
+
+  const cardData = {
+    recipient: state.recipient, sender: state.sender, passcode: state.passcode,
+    hint: state.hint, message: state.message, photos: state.uploadedPhotoUrls,
+  };
+
+  try {
+    await withRetry(() => saveCardToSupabase(state.draftId, cardData));
+    const url = `${location.origin}${location.href.replace(/[^/]*$/, '')}${CONFIG.VIEW_PAGE}?id=${state.draftId}`;
+    state.shareUrl = url;
+
+    try { localStorage.removeItem('gfday_lastPaymentId'); } catch(e) {}
+
+    closePayModal();
+    document.getElementById('watermark').style.display = 'none';
+    document.querySelector('#share-banner span').textContent = '🎉 Your link is ready! Share it with her.';
+    document.getElementById('share-url-text').textContent = url.length > 60 ? url.slice(0, 57) + '...' : url;
+    document.getElementById('share-banner').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (e) {
+    console.error(e);
+    err.innerHTML = 'Payment succeeded, but saving failed.<br>' +
+      '<button id="retry-save-btn" class="btn-primary" style="margin-top:10px">Retry Generating Link</button><br>' +
+      `<span style="font-size:11px;color:#cda5ae">Contact support with payment id: ${paymentId}</span>`;
+    err.classList.remove('hidden');
+    btn.disabled = false;
+    btn.textContent = 'Retry — Get Link';
+    const rb = document.getElementById('retry-save-btn');
+    if (rb) rb.onclick = () => onPaymentSuccess(paymentId);
+  }
+}
+
+function copyLink() {
+  if (!state.shareUrl) return;
+  navigator.clipboard.writeText(state.shareUrl).then(() => {
+    const btn = document.querySelector('#share-banner button');
+    const old = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = old, 2000);
+  });
+}
+
+window.addEventListener('load', () => showPage('pg-form'));
+</script>
+</body>
+</html>
