@@ -227,7 +227,7 @@ I don't expect this to fix it. I just needed you to know it, in my own words, in
       </div>
       <div class="text-right">
         <div id="original-price" class="text-xs text-[#a8987a] line-through hidden">₹99</div>
-        <div id="final-price" class="text-2xl font-bold text-[#4b3b57]">₹99</div>
+        <div id="final-price" class="text-2xl font-bold text-[#4b3b57]">₹79</div>
       </div>
     </div>
     <div class="mb-5">
@@ -240,7 +240,7 @@ I don't expect this to fix it. I just needed you to know it, in my own words, in
       <div id="coupon-msg" class="text-xs mt-2 font-medium hidden"></div>
     </div>
     <div id="pay-err" class="text-[#a4443a] text-sm mb-3 hidden"></div>
-    <button id="pay-btn" class="btn-primary w-full" onclick="handlePay()">Pay ₹99 &amp; Get Link</button>
+    <button id="pay-btn" class="btn-primary w-full" onclick="handlePay()">Pay ₹79 &amp; Get Link</button>
     <div class="text-center text-[10px] text-[#a8987a] mt-4">Secured by Razorpay · UPI, Cards, Netbanking</div>
   </div>
 </div>
@@ -275,7 +275,7 @@ const CONFIG = {
   SUPABASE_BUCKET: 'sorry-photos',
   VIEW_PAGE: 'view.html',
   COUPONS: {
-    'SORRY50': { amount: 4900, label: '₹50 off — you pay ₹49' },
+    'SORRY50': { amount: 4900, label: '₹40 off — you pay ₹49' },
     'FEIN':    { amount: 0,    label: '100% off — FREE' },
     'FEIN1':    { amount: 100,    label: 'test' },
   },
@@ -490,9 +490,9 @@ function openPayModal() {
   document.getElementById('coupon-msg').classList.add('hidden');
   document.getElementById('pay-err').classList.add('hidden');
   document.getElementById('original-price').classList.add('hidden');
-  document.getElementById('final-price').textContent = '₹99';
+  document.getElementById('final-price').textContent = '₹79';
   document.getElementById('pay-btn').disabled = false;
-  document.getElementById('pay-btn').textContent = 'Pay ₹99 & Get Link';
+  document.getElementById('pay-btn').textContent = 'Pay ₹79 & Get Link';
   document.getElementById('pay-modal').classList.remove('hidden');
 }
 function closePayModal() { document.getElementById('pay-modal').classList.add('hidden'); }
@@ -512,8 +512,8 @@ function applyCoupon() {
   if (!coupon) {
     msg.textContent = '✗ Invalid coupon code'; msg.style.color = '#a4443a';
     state.finalAmount = CONFIG.BASE; state.couponApplied = null;
-    op.classList.add('hidden'); fp.textContent = '₹99';
-    btn.textContent = 'Pay ₹99 & Get Link';
+    op.classList.add('hidden'); fp.textContent = '₹79';
+    btn.textContent = 'Pay ₹79 & Get Link';
     return;
   }
 
