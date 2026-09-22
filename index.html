@@ -571,7 +571,7 @@ async function onPaymentSuccess(paymentId) {
 
     closePayModal();
     document.getElementById('watermark').style.display = 'none';
-    document.querySelector('#share-banner span').textContent = '🎉 Your link is ready! Share it whenever you're ready.';
+    document.querySelector('#share-banner span').textContent = "🎉 Your link is ready! Share it whenever you're ready.";
     document.getElementById('share-url-text').textContent = url.length > 60 ? url.slice(0, 57) + '...' : url;
     document.getElementById('share-banner').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
