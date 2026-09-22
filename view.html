@@ -3,44 +3,50 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>A Surprise For You 💕</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>Mended</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Caveat:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Kalam:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: #fdf2f4; min-height: 100vh; }
+  body { font-family: 'Inter', sans-serif; background: #241f2e; min-height: 100vh; }
+
   @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-  .spin { animation: spin 0.8s linear infinite; }
+  .spin { animation: spin 0.9s linear infinite; }
+
   #state-loading, #state-error {
     display: flex; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center;
     gap: 16px; text-align: center; padding: 24px;
+    background: linear-gradient(165deg,#241f2e,#171320);
   }
   #state-error { display: none; }
+
   .btn-primary {
     padding: 12px 32px; border-radius: 30px; font-size: 13px;
-    font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-    cursor: pointer; border: 2.5px solid #b83b5e; background: #b83b5e; color: #fff;
-    font-family: 'Inter', sans-serif;
+    font-weight: 600; letter-spacing: .6px;
+    cursor: pointer; border: 1.5px solid #e6c25c; background: #e6c25c; color: #241f2e;
+    font-family: 'Inter', sans-serif; transition: transform .15s, background .2s;
   }
+  .btn-primary:hover { transform: scale(1.04); background: #f0d27a; }
+
   ::-webkit-scrollbar { width:6px; }
-  ::-webkit-scrollbar-track { background:#fdf2f4; }
-  ::-webkit-scrollbar-thumb { background:#f0c4ce; border-radius:3px; }
+  ::-webkit-scrollbar-track { background:#241f2e; }
+  ::-webkit-scrollbar-thumb { background:#4a3f56; border-radius:3px; }
 </style>
 </head>
 <body>
 
 <div id="state-loading">
-  <div style="font-size:48px">💌</div>
-  <div style="font-family:'Dancing Script',cursive;font-size:32px;color:#1a0f0a">Loading your surprise...</div>
-  <div style="width:36px;height:36px;border:3px solid #f0c4ce;border-top-color:#b83b5e;border-radius:50%" class="spin"></div>
+  <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+    <path d="M8 6 L26 26 L18 34 L36 46" stroke="#e6c25c" stroke-width="2" fill="none" opacity="0.85" stroke-linecap="round"/>
+  </svg>
+  <div style="font-family:'Fraunces',serif;font-style:italic;font-size:26px;color:#f2ece0">Opening it gently...</div>
+  <div style="width:34px;height:34px;border:3px solid rgba(230,194,92,.25);border-top-color:#e6c25c;border-radius:50%" class="spin"></div>
 </div>
 
 <div id="state-error">
-  <div style="font-size:44px">💔</div>
-  <div style="font-family:'Dancing Script',cursive;font-size:28px;color:#1a0f0a">This link isn't valid</div>
-  <p style="color:#b8718a;font-size:14px;max-width:360px">The surprise you're looking for doesn't exist or the link is incomplete. Double-check the link you were sent.</p>
+  <div style="font-family:'Fraunces',serif;font-style:italic;font-size:28px;color:#f2ece0">This link isn't valid</div>
+  <p style="color:rgba(242,236,224,.65);font-size:14px;max-width:360px;font-family:'Inter',sans-serif">The apology you're looking for doesn't exist, or the link is incomplete. Double-check the link you were sent.</p>
 </div>
 
 <div id="exp-mount"></div>
@@ -48,9 +54,9 @@
 <script src="experience.js"></script>
 <script>
 const CONFIG = {
-  SUPABASE_URL: 'https://iliakhaufgpjjtwamisn.supabase.co',
-  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlsaWFraGF1Zmdwamp0d2FtaXNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTU0NTMsImV4cCI6MjA5NjQzMTQ1M30.nim8jt-cUhb3IIWjnd0FC3NF6xS_gg8RelBBJG1bIno',
-  SUPABASE_TABLE: 'gf_day_cards',
+  SUPABASE_URL: 'https://REPLACE_ME.supabase.co',
+  SUPABASE_ANON_KEY: 'REPLACE_ME',
+  SUPABASE_TABLE: 'sorry_cards',
 };
 
 async function loadCard(id) {
