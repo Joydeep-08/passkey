@@ -8,90 +8,42 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Kalam:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', sans-serif; background: #f7f2e7; min-height: 100vh; }
   .font-display { font-family: 'Fraunces', serif; font-style: italic; }
   .font-hand    { font-family: 'Kalam', cursive; }
-
   .page { display: none; min-height: 100vh; }
   .page.active { display: flex; flex-direction: column; }
-
   @keyframes fadeIn  { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
   @keyframes spin    { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
   @keyframes pulse   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
   .fade-in    { animation: fadeIn 0.45s ease both; }
   .spin       { animation: spin 0.8s linear infinite; }
   .pulse-btn  { animation: pulse 2.2s ease-in-out infinite; }
-
-  .watermark-wrap {
-    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
-    display: flex; flex-direction: column; justify-content: space-around; overflow: hidden;
-  }
-  .watermark-row {
-    display: flex; gap: 100px; white-space: nowrap;
-    font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: 17px; letter-spacing: 5px; color: #4b3b57; opacity: 0.08;
-  }
+  .watermark-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 9999; display: flex; flex-direction: column; justify-content: space-around; overflow: hidden; }
+  .watermark-row { display: flex; gap: 100px; white-space: nowrap; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 5px; color: #4b3b57; opacity: 0.08; }
   .watermark-row:nth-child(odd) { transform: rotate(-22deg) translateX(-60px); }
   .watermark-row:nth-child(even){ transform: rotate(-22deg) translateX(60px); }
-
-  .btn-primary {
-    padding: 12px 32px; border-radius: 30px; font-size: 13px;
-    font-weight: 600; letter-spacing: .6px;
-    cursor: pointer; border: 1.5px solid #4b3b57;
-    background: #4b3b57; color: #f6f0e2;
-    font-family: 'Inter', sans-serif;
-    transition: background 0.2s, transform 0.15s;
-  }
+  .btn-primary { padding: 12px 32px; border-radius: 30px; font-size: 13px; font-weight: 600; letter-spacing: .6px; cursor: pointer; border: 1.5px solid #4b3b57; background: #4b3b57; color: #f6f0e2; font-family: 'Inter', sans-serif; transition: background 0.2s, transform 0.15s; }
   .btn-primary:hover { background: #362a40; transform: scale(1.02); }
   .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-  .btn-outline {
-    padding: 12px 32px; border-radius: 30px; font-size: 13px;
-    font-weight: 600; letter-spacing: .6px;
-    cursor: pointer; border: 1.5px solid #4b3b57;
-    background: transparent; color: #4b3b57;
-    font-family: 'Inter', sans-serif;
-    transition: background 0.2s, color 0.2s, transform 0.15s;
-  }
+  .btn-outline { padding: 12px 32px; border-radius: 30px; font-size: 13px; font-weight: 600; letter-spacing: .6px; cursor: pointer; border: 1.5px solid #4b3b57; background: transparent; color: #4b3b57; font-family: 'Inter', sans-serif; transition: background 0.2s, color 0.2s, transform 0.15s; }
   .btn-outline:hover { background: #4b3b57; color: #fff; transform: scale(1.02); }
-
   .card { background:#fffdf9; border:1.5px solid #e6dcc4; border-radius:14px; }
-
   .modal-bg { position:fixed; inset:0; background:rgba(23,19,32,0.65); z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
   .modal-box { background:#fffdf9; border:1.5px solid #e6dcc4; border-radius:18px; width:100%; max-width:420px; padding:36px 32px; position:relative; font-family:'Inter',sans-serif; max-height:90vh; overflow-y:auto; }
-
-  .inp {
-    width:100%; padding:10px 14px; border-radius:10px;
-    border:1.5px solid #e6dcc4; background:#fffefb;
-    font-size:14px; color:#241f2e; outline:none;
-    font-family:'Inter',sans-serif; transition:border-color 0.2s;
-  }
+  .inp { width:100%; padding:10px 14px; border-radius:10px; border:1.5px solid #e6dcc4; background:#fffefb; font-size:14px; color:#241f2e; outline:none; font-family:'Inter',sans-serif; transition:border-color 0.2s; }
   .inp:focus { border-color: #4b3b57; }
-
   .pin-box { width:48px; height:56px; text-align:center; font-size:22px; letter-spacing:0; }
-
   .share-banner { background:#2e6b4f; color:#fff; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; font-family:'Inter',sans-serif; }
-
-  .photo-slot {
-    border: 1.5px dashed #cdbf9c; border-radius: 12px; aspect-ratio: 1/1;
-    display:flex; align-items:center; justify-content:center; cursor:pointer;
-    background:#fffefb; position:relative; overflow:hidden; transition:border-color .2s;
-  }
+  .photo-slot { border: 1.5px dashed #cdbf9c; border-radius: 12px; aspect-ratio: 1/1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:#fffefb; position:relative; overflow:hidden; transition:border-color .2s; }
   .photo-slot:hover { border-color:#4b3b57; }
   .photo-slot img { width:100%; height:100%; object-fit:cover; }
-  .photo-slot .remove-x {
-    position:absolute; top:4px; right:4px; width:22px; height:22px; border-radius:50%;
-    background:rgba(0,0,0,0.55); color:#fff; display:flex; align-items:center; justify-content:center;
-    font-size:14px; cursor:pointer;
-  }
-
-  #pg-loading { display:none; align-items:center; justify-content:center; min-height:100vh; background:#f7f2e7; flex-direction:column; gap:16px; }
-  #pg-loading.active { display:flex; }
-
+  .photo-slot .remove-x { position:absolute; top:4px; right:4px; width:22px; height:22px; border-radius:50%; background:rgba(0,0,0,0.55); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; cursor:pointer; }
+  #pg-loading, #pg-view-loading, #pg-view-error { display:none; align-items:center; justify-content:center; min-height:100vh; background:#f7f2e7; flex-direction:column; gap:16px; }
+  #pg-loading.active, #pg-view-loading.active, #pg-view-error.active { display:flex; }
   #camera-video, #camera-canvas { width:100%; border-radius:10px; background:#000; max-height:340px; object-fit:cover; }
-
   ::-webkit-scrollbar { width:6px; }
   ::-webkit-scrollbar-track { background:#f7f2e7; }
   ::-webkit-scrollbar-thumb { background:#e6dcc4; border-radius:3px; }
@@ -104,13 +56,22 @@
   <div class="font-display" style="font-size:26px;color:#241f2e" id="loading-text">One moment...</div>
 </div>
 
+<div id="pg-view-loading">
+  <div style="width:36px;height:36px;border:3px solid #e6dcc4;border-top-color:#4b3b57;border-radius:50%" class="spin"></div>
+  <div class="font-display" style="font-size:26px;color:#241f2e">Opening it gently...</div>
+</div>
+<div id="pg-view-error">
+  <div class="font-display" style="font-size:28px;color:#241f2e">This link isn't valid</div>
+  <p style="color:#77694f;font-size:14px;max-width:360px">The apology you're looking for doesn't exist on this device/browser, or the link is incomplete.</p>
+</div>
+
 <!-- PAGE 1 — FORM -->
 <div class="page" id="pg-form">
   <div class="flex items-center justify-center min-h-screen p-6">
     <div class="card w-full max-w-lg p-10 fade-in my-10">
       <div class="mb-8">
         <div class="font-display" style="font-size:44px;color:#241f2e;line-height:1.15;margin-bottom:4px">Say it properly</div>
-        <p class="text-[#77694f] text-sm mt-2">A locked, unfold-it-slowly apology. Fill this in, preview it, then pay for a link you can send.</p>
+        <p class="text-[#77694f] text-sm mt-2">A locked, unfold-it-slowly apology. Fill this in, preview it, then get a link you can send.</p>
       </div>
       <div class="space-y-5">
         <div>
@@ -121,7 +82,6 @@
           <label class="block text-xs font-semibold text-[#5a4d38] uppercase tracking-wider mb-2">Your Name *</label>
           <input id="f-sender" class="inp" placeholder="e.g. Rohan" />
         </div>
-
         <div>
           <label class="block text-xs font-semibold text-[#5a4d38] uppercase tracking-wider mb-2">4-Digit Passcode *</label>
           <div class="flex gap-2">
@@ -136,7 +96,6 @@
           <label class="block text-xs font-semibold text-[#5a4d38] uppercase tracking-wider mb-2">Passcode Hint <span class="normal-case font-normal text-[#a8987a]">(optional)</span></label>
           <input id="f-hint" class="inp" placeholder="e.g. the date we met" />
         </div>
-
         <div>
           <label class="block text-xs font-semibold text-[#5a4d38] uppercase tracking-wider mb-2">3 Photos *</label>
           <div class="grid grid-cols-3 gap-3">
@@ -147,7 +106,6 @@
           <p class="text-[11px] text-[#a8987a] mt-1">Tapping a slot opens your camera to take it live — you can upload instead if you'd rather.</p>
           <input type="file" id="file-input" accept="image/*" class="hidden" />
         </div>
-
         <div>
           <label class="block text-xs font-semibold text-[#5a4d38] uppercase tracking-wider mb-2">Your Letter *</label>
           <textarea id="f-message" class="inp" rows="7" style="resize:vertical">I've been turning this over in my head, and I keep landing in the same place — I was wrong, and I'm sorry.
@@ -156,7 +114,6 @@ Not the kind of sorry that just wants the discomfort to end. The kind that actua
 
 I don't expect this to fix it. I just needed you to know it, in my own words, in my own time.</textarea>
         </div>
-
         <div id="form-err" class="text-[#a4443a] text-sm hidden">Please fill in both names, a 4-digit passcode, and all 3 photos.</div>
         <button class="btn-primary w-full mt-2 pulse-btn" onclick="gotoPreview()">Preview It →</button>
       </div>
@@ -191,13 +148,14 @@ I don't expect this to fix it. I just needed you to know it, in my own words, in
   <div id="preview-mount" style="min-height:100vh"></div>
 </div>
 
+<!-- VIEW (recipient) MOUNT -->
+<div id="exp-mount"></div>
+
 <!-- CAMERA MODAL -->
 <div class="modal-bg hidden" id="camera-modal">
   <div class="modal-box fade-in">
     <button onclick="closeCameraModal()" class="absolute top-4 right-4 text-2xl text-[#a8987a] bg-none border-none cursor-pointer leading-none">×</button>
-    <div class="mb-4">
-      <div class="font-display" style="font-size:24px;color:#241f2e">Take a photo</div>
-    </div>
+    <div class="mb-4"><div class="font-display" style="font-size:24px;color:#241f2e">Take a photo</div></div>
     <video id="camera-video" autoplay playsinline muted></video>
     <canvas id="camera-canvas" class="hidden"></canvas>
     <div id="camera-error" class="text-[#a4443a] text-sm mt-3 hidden">Couldn't access your camera. You can upload one instead.</div>
@@ -206,13 +164,11 @@ I don't expect this to fix it. I just needed you to know it, in my own words, in
       <button id="cam-retake-btn" class="btn-outline flex-1 hidden" onclick="retakePhoto()">Retake</button>
       <button id="cam-use-btn" class="btn-primary flex-1 hidden" onclick="useCapturedPhoto()">Use This</button>
     </div>
-    <div class="text-center mt-4">
-      <span class="text-xs text-[#a8987a] underline cursor-pointer" onclick="uploadInstead()">or upload from your gallery</span>
-    </div>
+    <div class="text-center mt-4"><span class="text-xs text-[#a8987a] underline cursor-pointer" onclick="uploadInstead()">or upload from your gallery</span></div>
   </div>
 </div>
 
-<!-- PAYMENT MODAL -->
+<!-- GENERATE LINK MODAL -->
 <div class="modal-bg hidden" id="pay-modal">
   <div class="modal-box fade-in">
     <button onclick="closePayModal()" class="absolute top-4 right-4 text-2xl text-[#a8987a] bg-none border-none cursor-pointer leading-none">×</button>
@@ -226,15 +182,14 @@ I don't expect this to fix it. I just needed you to know it, in my own words, in
         <div class="text-xs text-[#a8987a] mt-0.5">Shareable link • Hosted forever</div>
       </div>
       <div class="text-right">
-        <div id="original-price" class="text-xs text-[#a8987a] line-through hidden">₹99</div>
+        <div id="original-price" class="text-xs text-[#a8987a] line-through hidden">₹79</div>
         <div id="final-price" class="text-2xl font-bold text-[#4b3b57]">₹79</div>
       </div>
     </div>
     <div class="mb-5">
       <label class="block text-xs font-semibold text-[#5a4d38] uppercase tracking-wider mb-2">Coupon Code</label>
       <div class="flex gap-2">
-        <input id="coupon-inp" class="inp flex-1" placeholder=" Optional " style="text-transform:uppercase"
-          oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')applyCoupon()" />
+        <input id="coupon-inp" class="inp flex-1" placeholder=" Optional " style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')applyCoupon()" />
         <button onclick="applyCoupon()" class="btn-outline text-xs px-4 py-2 whitespace-nowrap">Apply</button>
       </div>
       <div id="coupon-msg" class="text-xs mt-2 font-medium hidden"></div>
@@ -244,14 +199,11 @@ I don't expect this to fix it. I just needed you to know it, in my own words, in
     <div class="text-center text-[10px] text-[#a8987a] mt-4">Secured by Razorpay · UPI, Cards, Netbanking</div>
   </div>
 </div>
-
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<!-- Shared multi-scene experience renderer (also used by view.html) -->
-<script src="experience.js"></script>
 
 <script>
 /*
-  ── ONE-TIME SUPABASE SETUP (run in SQL editor) ──
+  ── ONE-TIME SUPABASE SETUP (run in SQL editor, if not already done) ──
   create table sorry_cards (
     id uuid primary key,
     data jsonb not null,
@@ -273,23 +225,53 @@ const CONFIG = {
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkbGxvbnhnbmF4bHl2dG93Zmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzk3OTQsImV4cCI6MjEwMDcxNTc5NH0.tn2vWiph6mAv7VKdM4Hl8_VtegmDbfTvZirxiZovL4M',
   SUPABASE_TABLE: 'sorry_cards',
   SUPABASE_BUCKET: 'sorry-photos',
-  VIEW_PAGE: 'view.html',
-  COUPONS: {
-    'SORRY50': { amount: 4900, label: '₹40 off — you pay ₹49' },
-    'FEIN':    { amount: 0,    label: '100% off — FREE' },
-    'FEIN1':    { amount: 100,    label: 'test' },
-  },
   BASE: 7900,
+  COUPONS: {
+    'FEIN1': { amount: 100, label: '₹78 off — you pay ₹1' },
+    'FEIN':  { amount: 0,   label: '100% off — FREE' },
+    'LOVE':  { amount: 5900, label: '₹20 off — you pay ₹59' },
+  },
 };
+
+async function uploadPhoto(file, id, index) {
+  const ext = (file.name ? (file.name.split('.').pop() || 'jpg') : 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+  const path = `${id}/photo${index}.${ext}`;
+  const res = await fetch(`${CONFIG.SUPABASE_URL}/storage/v1/object/${CONFIG.SUPABASE_BUCKET}/${path}`, {
+    method: 'POST',
+    headers: { 'apikey': CONFIG.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`, 'Content-Type': file.type || 'image/jpeg', 'x-upsert': 'true' },
+    body: file,
+  });
+  if (!res.ok) { const t = await res.text().catch(()=>''); throw new Error('Photo upload failed: ' + res.status + ' ' + t); }
+  return `${CONFIG.SUPABASE_URL}/storage/v1/object/public/${CONFIG.SUPABASE_BUCKET}/${path}`;
+}
+async function saveCardToSupabase(id, cardData) {
+  const res = await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/${CONFIG.SUPABASE_TABLE}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': CONFIG.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`, 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ id, data: cardData }),
+  });
+  if (!res.ok) { const t = await res.text().catch(()=>''); throw new Error('Save failed: ' + res.status + ' ' + t); }
+}
+async function loadCardFromSupabase(id) {
+  const res = await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/${CONFIG.SUPABASE_TABLE}?id=eq.${encodeURIComponent(id)}&select=data`, {
+    headers: { 'apikey': CONFIG.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}` },
+  });
+  if (!res.ok) throw new Error('Load failed: ' + res.status);
+  const rows = await res.json();
+  if (!rows || !rows.length) throw new Error('Card not found');
+  return rows[0].data;
+}
+async function withRetry(fn, attempts = 4) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) { try { return await fn(); } catch (e) { lastErr = e; await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i))); } }
+  throw lastErr;
+}
 
 let state = {
   recipient: '', sender: '', passcode: '', hint: '', message: '',
-  photoFiles: [null, null, null],
-  photoPreviewUrls: [null, null, null],
-  finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null,
-  draftId: null,
+  photoFiles: [null, null, null], photoPreviewUrls: [null, null, null],
+  finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null, draftId: null,
 };
-
 let activeSlot = null;
 
 function showLoading(text) {
@@ -304,10 +286,8 @@ function showPage(id) {
   window.scrollTo(0, 0);
 }
 
-/* ── PHOTO CAPTURE (live camera) ── */
-let cameraStream = null;
-let cameraSlot = null;
-
+/* ── PHOTO CAPTURE ── */
+let cameraStream = null, cameraSlot = null;
 async function pickPhoto(idx) {
   cameraSlot = idx;
   document.getElementById('camera-modal').classList.remove('hidden');
@@ -332,8 +312,7 @@ function closeCameraModal() {
 function capturePhoto() {
   const video = document.getElementById('camera-video');
   const canvas = document.getElementById('camera-canvas');
-  canvas.width = video.videoWidth || 640;
-  canvas.height = video.videoHeight || 480;
+  canvas.width = video.videoWidth || 640; canvas.height = video.videoHeight || 480;
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
   video.classList.add('hidden'); canvas.classList.remove('hidden');
   document.getElementById('cam-capture-btn').classList.add('hidden');
@@ -349,23 +328,19 @@ function retakePhoto() {
 }
 function useCapturedPhoto() {
   const canvas = document.getElementById('camera-canvas');
-  canvas.toBlob((blob) => {
-    if (!blob) return;
-    setSlotPhoto(cameraSlot, blob);
-    closeCameraModal();
-  }, 'image/jpeg', 0.9);
+  canvas.toBlob((blob) => { if (blob) { setSlotPhoto(cameraSlot, blob); closeCameraModal(); } }, 'image/jpeg', 0.85);
 }
-function uploadInstead() {
-  activeSlot = cameraSlot;
-  closeCameraModal();
-  document.getElementById('file-input').click();
-}
+function uploadInstead() { activeSlot = cameraSlot; closeCameraModal(); document.getElementById('file-input').click(); }
 function setSlotPhoto(idx, fileOrBlob) {
   state.photoFiles[idx] = fileOrBlob;
   const url = URL.createObjectURL(fileOrBlob);
   state.photoPreviewUrls[idx] = url;
-  const slot = document.getElementById('slot-' + idx);
-  slot.innerHTML = `<img src="${url}" /><div class="remove-x" onclick="event.stopPropagation();removePhoto(${idx})">✕</div>`;
+  document.getElementById('slot-' + idx).innerHTML = `<img src="${url}" /><div class="remove-x" onclick="event.stopPropagation();removePhoto(${idx})">✕</div>`;
+}
+function removePhoto(idx) {
+  state.photoFiles[idx] = null; state.photoPreviewUrls[idx] = null;
+  const labels = ['Photo 1<br><span class="text-[10px]">(lock screen)</span>', 'Photo 2', 'Photo 3'];
+  document.getElementById('slot-' + idx).innerHTML = `<span class="text-xs text-[#a8987a] px-2 text-center">${labels[idx]}</span>`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -375,24 +350,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setSlotPhoto(activeSlot, file);
     e.target.value = '';
   });
-
-  // PIN box auto-advance
   document.querySelectorAll('.pin-box').forEach((box, i, all) => {
     box.addEventListener('input', () => {
       box.value = box.value.replace(/[^0-9]/g, '');
       if (box.value && i < all.length - 1) all[i + 1].focus();
     });
-    box.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !box.value && i > 0) all[i - 1].focus();
-    });
+    box.addEventListener('keydown', (e) => { if (e.key === 'Backspace' && !box.value && i > 0) all[i - 1].focus(); });
   });
 });
-function removePhoto(idx) {
-  state.photoFiles[idx] = null;
-  state.photoPreviewUrls[idx] = null;
-  const labels = ['Photo 1<br><span class="text-[10px]">(lock screen)</span>', 'Photo 2', 'Photo 3'];
-  document.getElementById('slot-' + idx).innerHTML = `<span class="text-xs text-[#a8987a] px-2 text-center">${labels[idx]}</span>`;
-}
 
 /* ── FORM → PREVIEW ── */
 function gotoPreview() {
@@ -402,90 +367,21 @@ function gotoPreview() {
   const hint = document.getElementById('f-hint').value.trim();
   const message = document.getElementById('f-message').value.trim();
   const photosOk = state.photoFiles.every(f => f);
-
   if (!r || !s || pinDigits.length !== 4 || !photosOk || !message) {
-    document.getElementById('form-err').classList.remove('hidden');
-    return;
+    document.getElementById('form-err').classList.remove('hidden'); return;
   }
   document.getElementById('form-err').classList.add('hidden');
-
-  state.recipient = r; state.sender = s; state.passcode = pinDigits;
-  state.hint = hint; state.message = message;
-
+  state.recipient = r; state.sender = s; state.passcode = pinDigits; state.hint = hint; state.message = message;
   renderExperience(document.getElementById('preview-mount'), {
-    recipient: r, sender: s, passcode: pinDigits, hint,
-    message, photos: state.photoPreviewUrls,
+    recipient: r, sender: s, passcode: pinDigits, hint, message, photos: state.photoPreviewUrls,
   }, { preview: true, onGenerate: startGenerateLink });
-
   document.getElementById('share-banner').classList.add('hidden');
   document.getElementById('watermark').style.display = 'flex';
   showPage('pg-preview');
 }
 
-/* ── SUPABASE HELPERS ── */
-async function uploadPhoto(file, id, index) {
-  const ext = (file.name ? (file.name.split('.').pop() || 'jpg') : 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
-  const path = `${id}/photo${index}.${ext}`;
-  const res = await fetch(`${CONFIG.SUPABASE_URL}/storage/v1/object/${CONFIG.SUPABASE_BUCKET}/${path}`, {
-    method: 'POST',
-    headers: {
-      'apikey': CONFIG.SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
-      'Content-Type': file.type || 'image/jpeg',
-      'x-upsert': 'true',
-    },
-    body: file,
-  });
-  if (!res.ok) { const t = await res.text().catch(()=>''); throw new Error('Photo upload failed: ' + res.status + ' ' + t); }
-  return `${CONFIG.SUPABASE_URL}/storage/v1/object/public/${CONFIG.SUPABASE_BUCKET}/${path}`;
-}
-
-async function saveCardToSupabase(id, cardData) {
-  const res = await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/${CONFIG.SUPABASE_TABLE}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'apikey': CONFIG.SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
-      'Prefer': 'return=minimal',
-    },
-    body: JSON.stringify({ id, data: cardData }),
-  });
-  if (!res.ok) { const t = await res.text().catch(()=>''); throw new Error('Save failed: ' + res.status + ' ' + t); }
-}
-
-async function withRetry(fn, attempts = 4) {
-  let lastErr;
-  for (let i = 0; i < attempts; i++) {
-    try { return await fn(); }
-    catch (e) { lastErr = e; await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i))); }
-  }
-  throw lastErr;
-}
-
-/* ── GENERATE LINK: called only from the small pill on the final scene ── */
-async function startGenerateLink() {
-  try {
-    showLoading('Preparing your photos...');
-    if (!state.draftId) state.draftId = (crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now());
-    state.uploadedPhotoUrls = [];
-    for (let i = 0; i < 3; i++) {
-      const url = await withRetry(() => uploadPhoto(state.photoFiles[i], state.draftId, i + 1));
-      state.uploadedPhotoUrls.push(url);
-    }
-    showPage('pg-preview');
-    openPayModal();
-  } catch (e) {
-    console.error(e);
-    showPage('pg-preview');
-    alert('Could not upload photos. Please check your connection and try again.');
-  }
-}
-
-/* ── MODAL ── */
-function openPayModal() {
-  state.finalAmount = CONFIG.BASE;
-  state.couponApplied = null;
+function startGenerateLink() {
+  state.finalAmount = CONFIG.BASE; state.couponApplied = null;
   document.getElementById('coupon-inp').value = '';
   document.getElementById('coupon-msg').classList.add('hidden');
   document.getElementById('pay-err').classList.add('hidden');
@@ -497,79 +393,50 @@ function openPayModal() {
 }
 function closePayModal() { document.getElementById('pay-modal').classList.add('hidden'); }
 
-/* ── COUPON ── */
 function applyCoupon() {
   const code = document.getElementById('coupon-inp').value.trim().toUpperCase();
-  const msg  = document.getElementById('coupon-msg');
-  const fp   = document.getElementById('final-price');
-  const op   = document.getElementById('original-price');
-  const btn  = document.getElementById('pay-btn');
+  const msg = document.getElementById('coupon-msg'), fp = document.getElementById('final-price'), op = document.getElementById('original-price'), btn = document.getElementById('pay-btn');
   msg.classList.remove('hidden');
-
   if (!code) { msg.textContent = ''; msg.classList.add('hidden'); return; }
-
   const coupon = CONFIG.COUPONS[code];
   if (!coupon) {
     msg.textContent = '✗ Invalid coupon code'; msg.style.color = '#a4443a';
     state.finalAmount = CONFIG.BASE; state.couponApplied = null;
-    op.classList.add('hidden'); fp.textContent = '₹79';
-    btn.textContent = 'Pay ₹79 & Get Link';
+    op.classList.add('hidden'); fp.textContent = '₹79'; btn.textContent = 'Pay ₹79 & Get Link';
     return;
   }
-
-  state.finalAmount = coupon.amount;
-  state.couponApplied = code;
+  state.finalAmount = coupon.amount; state.couponApplied = code;
   msg.textContent = '✓ ' + coupon.label; msg.style.color = '#2e6b4f';
-
   const display = coupon.amount === 0 ? 'FREE' : '₹' + (coupon.amount / 100);
   fp.textContent = display;
-  if (coupon.amount < CONFIG.BASE) op.classList.remove('hidden');
+  if (coupon.amount < CONFIG.BASE) op.classList.remove('hidden'); else op.classList.add('hidden');
   btn.textContent = coupon.amount === 0 ? 'Get Link for FREE' : `Pay ${display} & Get Link`;
 }
 
-/* ── PAY ── */
 function handlePay() {
   document.getElementById('pay-err').classList.add('hidden');
-
-  if (state.finalAmount === 0) {
-    onPaymentSuccess('free_' + Math.random().toString(36).slice(2));
-    return;
-  }
-
+  if (state.finalAmount === 0) { onPaymentSuccess('free_' + Math.random().toString(36).slice(2)); return; }
   const options = {
     key: CONFIG.RZP_KEY, amount: state.finalAmount, currency: 'INR',
     name: 'Mended', description: `Apology link for ${state.recipient}`,
     notes: { coupon: state.couponApplied || '', recipient: state.recipient, sender: state.sender },
     theme: { color: '#4b3b57' },
-    handler: function(response) {
-      try { localStorage.setItem('sorry_lastPaymentId', response.razorpay_payment_id); } catch(e) {}
-      onPaymentSuccess(response.razorpay_payment_id);
-    },
+    handler: function(response) { onPaymentSuccess(response.razorpay_payment_id); },
   };
   new Razorpay(options).open();
 }
 
-/* ── POST PAYMENT: save DB row referencing already-uploaded photos ── */
 async function onPaymentSuccess(paymentId) {
-  const btn = document.getElementById('pay-btn');
-  const err = document.getElementById('pay-err');
-  err.classList.add('hidden');
-  btn.disabled = true;
-  btn.textContent = 'Generating your link...';
-
-  const cardData = {
-    recipient: state.recipient, sender: state.sender, passcode: state.passcode,
-    hint: state.hint, message: state.message, photos: state.uploadedPhotoUrls,
-  };
-
+  const btn = document.getElementById('pay-btn'), err = document.getElementById('pay-err');
+  err.classList.add('hidden'); btn.disabled = true; btn.textContent = 'Generating your link...';
   try {
+    if (!state.draftId) state.draftId = (crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now());
+    const uploadedPhotoUrls = [];
+    for (let i = 0; i < 3; i++) uploadedPhotoUrls.push(await withRetry(() => uploadPhoto(state.photoFiles[i], state.draftId, i + 1)));
+    const cardData = { recipient: state.recipient, sender: state.sender, passcode: state.passcode, hint: state.hint, message: state.message, photos: uploadedPhotoUrls };
     await withRetry(() => saveCardToSupabase(state.draftId, cardData));
-    const dir = location.pathname.replace(/[^/]*$/, '');
-    const url = `${location.origin}${dir}${CONFIG.VIEW_PAGE}?id=${state.draftId}`;
+    const url = `${location.origin}${location.pathname}?id=${state.draftId}`;
     state.shareUrl = url;
-
-    try { localStorage.removeItem('sorry_lastPaymentId'); } catch(e) {}
-
     closePayModal();
     document.getElementById('watermark').style.display = 'none';
     document.querySelector('#share-banner span').textContent = "🎉 Your link is ready! Share it whenever you're ready.";
@@ -582,24 +449,280 @@ async function onPaymentSuccess(paymentId) {
       '<button id="retry-save-btn" class="btn-primary" style="margin-top:10px">Retry Generating Link</button><br>' +
       `<span style="font-size:11px;color:#a8987a">Contact support with payment id: ${paymentId}</span>`;
     err.classList.remove('hidden');
-    btn.disabled = false;
-    btn.textContent = 'Retry — Get Link';
+    btn.disabled = false; btn.textContent = 'Retry — Get Link';
     const rb = document.getElementById('retry-save-btn');
     if (rb) rb.onclick = () => onPaymentSuccess(paymentId);
   }
 }
-
 function copyLink() {
   if (!state.shareUrl) return;
   navigator.clipboard.writeText(state.shareUrl).then(() => {
     const btn = document.querySelector('#share-banner button');
-    const old = btn.textContent;
-    btn.textContent = 'Copied!';
+    const old = btn.textContent; btn.textContent = 'Copied!';
     setTimeout(() => btn.textContent = old, 2000);
   });
 }
 
-window.addEventListener('load', () => showPage('pg-form'));
+/* ═══════════ shared experience renderer (was experience.js) ═══════════ */
+(function () {
+  if (!document.getElementById('exp-styles')) {
+    const style = document.createElement('style');
+    style.id = 'exp-styles';
+    style.textContent = `
+      .exp-root { min-height: 100vh; font-family:'Inter',sans-serif; }
+      @keyframes expFadeIn   { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+      @keyframes expShake    { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-10px)} 40%{transform:translateX(10px)} 60%{transform:translateX(-8px)} 80%{transform:translateX(8px)} }
+      @keyframes expPulse    { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+      @keyframes expOpen     { from{transform:scale(0.9) translateY(10px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+      @keyframes expRise     { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+      @keyframes expSeam     { to { stroke-dashoffset: 0; } }
+      @keyframes expGlow     { 0%,100%{opacity:.55} 50%{opacity:1} }
+      @keyframes expBob      { 0%,100%{transform:translateY(0) rotate(var(--r,0deg))} 50%{transform:translateY(-6px) rotate(var(--r,0deg))} }
+      @keyframes expPillIn   { from{opacity:0;transform:translate(-50%,14px)} to{opacity:1;transform:translate(-50%,0)} }
+      .exp-fade   { animation: expFadeIn .55s ease both; }
+      .exp-shake  { animation: expShake .5s ease; }
+      .exp-pulse  { animation: expPulse 2s ease-in-out infinite; }
+      .exp-open   { animation: expOpen .45s cubic-bezier(.2,.7,.3,1) both; }
+      .exp-rise   { animation: expRise .6s ease both; }
+      .exp-glow   { animation: expGlow 2.4s ease-in-out infinite; }
+      .exp-seam   { stroke-dasharray: 220; stroke-dashoffset: 220; animation: expSeam 1.1s ease forwards; }
+      .exp-card   { animation: expBob 5s ease-in-out infinite; }
+      .exp-btn { padding:12px 30px;border-radius:30px;font-size:13px;font-weight:600;letter-spacing:.6px;cursor:pointer;border:1.5px solid #e6c25c;background:#e6c25c;color:#241f2e;font-family:'Inter',sans-serif;transition:transform .15s,background .2s; }
+      .exp-btn:hover { transform:scale(1.04); background:#f0d27a; }
+      .exp-btn-outline { padding:12px 30px;border-radius:30px;font-size:13px;font-weight:600;letter-spacing:.6px;cursor:pointer;border:1.5px solid rgba(230,194,92,.7);background:transparent;color:#e6c25c;font-family:'Inter',sans-serif;transition:transform .15s,background .2s; }
+      .exp-btn-outline:hover { background:rgba(230,194,92,.12); transform:scale(1.04); }
+      .exp-key { width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(230,194,92,.3);color:#f2ece0;font-size:20px;font-weight:500;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;transition:background .15s,transform .1s; font-family:'Inter',sans-serif; }
+      .exp-key:hover { background:rgba(230,194,92,.14); }
+      .exp-key:active { transform:scale(0.92); }
+      .exp-pin-dot { width:12px;height:12px;border-radius:50%;border:1.5px solid #e6c25c; }
+      .exp-pin-dot.filled { background:#e6c25c; }
+      .exp-gen-pill { position:fixed; left:50%; bottom:26px; transform:translate(-50%,0); z-index:40; animation: expPillIn .5s ease both; padding:11px 26px; border-radius:999px; background:#241f2e; color:#e6c25c; border:1px solid rgba(230,194,92,.55); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.5px; cursor:pointer; box-shadow:0 10px 30px -10px rgba(0,0,0,.5); transition:transform .15s; }
+      .exp-gen-pill:hover { transform:translate(-50%,-2px); }
+      .exp-mute { width:34px;height:34px;border-radius:50%;border:1px solid #e4dcc8;background:#fffdf7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0; }
+      .exp-board-card { background:#fffdf9; padding:10px 10px 30px; box-shadow:0 16px 30px -14px rgba(36,31,46,.35); position:relative; }
+      .exp-tape { position:absolute; width:64px; height:22px; background:rgba(230,194,92,.35); top:-11px; left:50%; transform:translateX(-50%) rotate(-3deg); box-shadow:0 1px 2px rgba(0,0,0,.08); }
+      .exp-pin { position:absolute; top:-9px; left:50%; transform:translateX(-50%); width:16px; height:16px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #f0d27a, #b5842a); box-shadow:0 3px 5px rgba(0,0,0,.3); }
+    `;
+    document.head.appendChild(style);
+  }
+})();
+
+const VISION_CAPTIONS = ['before the noise', 'still us, underneath', "what i don't want to lose"];
+
+function renderExperience(mountEl, data, opts) {
+  opts = opts || {};
+  const photos = data.photos || [null, null, null];
+  let scene = 'locked', pin = '', wrongShake = false, soundOn = true;
+
+  function r() { mountEl.innerHTML = ''; draw(); }
+  function draw() {
+    mountEl.className = 'exp-root';
+    if (scene === 'locked') drawLocked();
+    else if (scene === 'greeting') drawGreeting();
+    else if (scene === 'mend') drawMend();
+    else if (scene === 'final') drawFinal();
+  }
+
+  let audioCtx = null;
+  function tick() {
+    if (!soundOn) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+      osc.type = 'square'; osc.frequency.value = 1150 + Math.random() * 260;
+      gain.gain.setValueAtTime(0.035, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.045);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+    } catch (e) {}
+  }
+
+  function drawLocked() {
+    mountEl.innerHTML = `
+    <div style="min-height:100vh;background:linear-gradient(165deg,#241f2e,#171320);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;position:relative;overflow:hidden">
+      ${kintsugiVeins(0.14)}
+      <div class="exp-fade" style="position:relative;z-index:1">
+        <div style="width:150px;height:180px;background:#fffdf7;padding:10px 10px 30px;border-radius:3px;box-shadow:0 18px 40px -12px rgba(0,0,0,.55);transform:rotate(-3deg);margin:0 auto 26px;position:relative">
+          <img src="${photos[0] || ''}" style="width:100%;height:132px;object-fit:cover;border-radius:2px;background:#e9e2d3" />
+          <svg viewBox="0 0 130 132" style="position:absolute;top:10px;left:10px;width:calc(100% - 20px);height:132px;pointer-events:none">
+            <path d="M10 0 L58 46 L40 70 L78 132" stroke="#e6c25c" stroke-width="2.4" fill="none" opacity="0.9" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div style="font-family:'Fraunces',serif;font-style:italic;font-size:32px;color:#f2ece0;margin-bottom:22px">For ${escapeHtml(data.recipient || 'you')}</div>
+        <div style="display:flex;justify-content:center;gap:10px;margin-bottom:26px">
+          ${[0,1,2,3].map(i => `<div class="exp-pin-dot ${i < pin.length ? 'filled' : ''}"></div>`).join('')}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,60px);gap:13px;justify-content:center;margin:0 auto 22px" class="${wrongShake ? 'exp-shake' : ''}">
+          ${['1','2','3','4','5','6','7','8','9','','0','back'].map(k => {
+            if (k === '') return `<div></div>`;
+            if (k === 'back') return `<div class="exp-key" onclick="__expKey('back')">⌫</div>`;
+            return `<div class="exp-key" onclick="__expKey('${k}')">${k}</div>`;
+          }).join('')}
+        </div>
+        ${data.hint ? `<p style="color:rgba(242,236,224,.65);font-size:13px;margin-bottom:6px">hint: ${escapeHtml(data.hint)}</p>` : ''}
+        ${opts.preview ? `<p style="color:rgba(242,236,224,.5);font-size:11px;margin-top:14px;cursor:pointer;text-decoration:underline" onclick="__expSkip()">skip (preview only)</p>` : ''}
+      </div>
+    </div>`;
+    window.__expKey = (k) => {
+      if (k === 'back') { pin = pin.slice(0, -1); r(); return; }
+      if (pin.length >= 4) return;
+      pin += k;
+      if (pin.length === 4) {
+        if (pin === String(data.passcode)) { setTimeout(() => { scene = 'greeting'; pin = ''; r(); }, 250); r(); }
+        else { r(); setTimeout(() => { pin = ''; wrongShake = true; r(); setTimeout(() => { wrongShake = false; }, 500); }, 350); }
+      } else { r(); }
+    };
+    window.__expSkip = () => { scene = 'greeting'; r(); };
+  }
+
+  function drawGreeting() {
+    mountEl.innerHTML = `
+    <div style="min-height:100vh;background:linear-gradient(160deg,#241f2e 0%,#392c2c 55%,#513c2a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;position:relative;overflow:hidden">
+      ${kintsugiVeins(0.1)}
+      <div class="exp-fade" style="position:relative;z-index:1;max-width:520px">
+        <div style="font-family:'Fraunces',serif;font-style:italic;font-size:clamp(34px,7vw,52px);color:#f6f0e2;line-height:1.2;margin-bottom:18px">I'm sorry, ${escapeHtml(data.recipient || '')}.</div>
+        <p style="font-family:'Kalam',cursive;font-size:19px;color:#d8c9a8">I know sorry doesn't undo it. But I need you to hear it anyway.</p>
+        <div style="margin-top:32px"><button class="exp-btn" onclick="__expGo('mend')">Continue</button></div>
+      </div>
+    </div>`;
+    window.__expGo = (s) => { scene = s; r(); };
+  }
+
+  let mended = false;
+  function drawMend() {
+    mountEl.innerHTML = `
+    <div style="min-height:100vh;background:linear-gradient(165deg,#241f2e,#171320);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center">
+      <div class="exp-fade">
+        <div style="font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:#f2ece0;margin-bottom:8px">${mended ? 'Mended, not erased.' : 'Some things break.'}</div>
+        <p style="font-family:'Kalam',cursive;font-size:17px;color:#c9bda3;margin-bottom:30px;max-width:340px">${mended ? 'The cracks are still part of it — just filled with something better than before.' : 'This one can still hold something beautiful. Tap it.'}</p>
+        ${vesselSVG(mended)}
+        <div style="margin-top:30px;${mended ? '' : 'visibility:hidden'}"><button class="exp-btn" onclick="__expGo('final')">Continue</button></div>
+      </div>
+    </div>`;
+    window.__expGo = (s) => { scene = s; r(); };
+    window.__expMend = () => { mended = true; r(); };
+  }
+  function vesselSVG(done) {
+    const leftShift = done ? 0 : -7, rightShift = done ? 0 : 7;
+    return `
+    <div onclick="${done ? '' : '__expMend()'}" style="cursor:${done ? 'default' : 'pointer'}" class="${done ? '' : 'exp-pulse'}">
+      <svg viewBox="0 0 160 130" width="160" height="130">
+        <g transform="translate(${leftShift},0)" style="transition:transform .5s ease"><path d="M20 30 Q22 100 50 112 L78 112 Q80 60 76 30 Z" fill="#3a3244"/></g>
+        <g transform="translate(${rightShift},0)" style="transition:transform .5s ease"><path d="M78 30 Q82 62 80 112 L108 112 Q136 96 138 30 Z" fill="#453b52"/></g>
+        ${done ? `<path d="M78 30 Q79 70 78 112" stroke="#e6c25c" stroke-width="3.5" fill="none" stroke-linecap="round" class="exp-seam"/>
+                  <path d="M40 40 L62 58" stroke="#e6c25c" stroke-width="2.5" fill="none" stroke-linecap="round" class="exp-seam" style="animation-delay:.2s"/>` : ''}
+      </svg>
+    </div>`;
+  }
+
+  let envelopeOpen = false, typingDone = false, boardShown = false;
+  function drawFinal() {
+    mountEl.innerHTML = `
+    <div style="min-height:100vh;background:linear-gradient(180deg,#241f2e 0,#241f2e 280px,#faf5ea 280px);padding:40px 20px 100px;display:flex;flex-direction:column;align-items:center">
+      ${!envelopeOpen ? `
+        <div class="exp-fade" style="min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-family:'Fraunces',serif;font-style:italic;font-size:26px;color:#f2ece0;margin-bottom:24px">One more thing...</div>
+          <div onclick="__expOpenEnv()" style="cursor:pointer;width:150px;margin:0 auto" class="exp-pulse">
+            <svg viewBox="0 0 150 100" width="150" height="100">
+              <rect x="0" y="10" width="150" height="90" rx="4" fill="#fffdf7"/>
+              <polygon points="0,10 75,58 150,10" fill="#efe4c9"/>
+              <circle cx="75" cy="52" r="11" fill="#c9a227"/>
+            </svg>
+          </div>
+          <p style="color:rgba(242,236,224,.6);font-size:13px;margin-top:16px">tap to open</p>
+        </div>` : `
+        <div class="exp-open" style="background:#fffdf7;border-radius:3px;padding:40px 32px;max-width:540px;width:100%;box-shadow:0 24px 55px -18px rgba(0,0,0,.4);margin-top:6px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+            <div style="font-family:'Fraunces',serif;font-style:italic;font-size:24px;color:#241f2e;text-align:left">Dear ${escapeHtml(data.recipient || '')},</div>
+            <div class="exp-mute" onclick="__expToggleSound()" title="toggle sound">${soundOn ? soundOnIcon() : soundOffIcon()}</div>
+          </div>
+          <div id="exp-letter-body" style="font-family:'Kalam',cursive;font-size:18px;color:#3a3228;white-space:pre-wrap;line-height:1.75;text-align:left;min-height:120px;cursor:pointer"></div>
+          <div id="exp-sign" style="font-family:'Fraunces',serif;font-style:italic;font-size:21px;color:#8a6a22;margin-top:18px;text-align:right;opacity:0;transition:opacity .6s">— ${escapeHtml(data.sender || '')}</div>
+        </div>
+        ${boardShown ? visionBoardHtml() : ''}
+      `}
+    </div>`;
+    window.__expOpenEnv = () => { envelopeOpen = true; r(); setTimeout(startTyping, 320); };
+    window.__expToggleSound = () => {
+      soundOn = !soundOn;
+      const muteBtn = document.querySelector('.exp-mute');
+      if (muteBtn) muteBtn.innerHTML = soundOn ? soundOnIcon() : soundOffIcon();
+    };
+    if (typingDone) {
+      const signEl = document.getElementById('exp-sign'); if (signEl) signEl.style.opacity = '1';
+      const letterEl = document.getElementById('exp-letter-body');
+      if (letterEl) { letterEl.textContent = data.message || ''; letterEl.dataset.typed = '1'; }
+    }
+    if (boardShown && opts.preview && !document.getElementById('exp-gen-pill')) {
+      const pill = document.createElement('div');
+      pill.id = 'exp-gen-pill'; pill.className = 'exp-gen-pill'; pill.textContent = 'Generate Link';
+      pill.onclick = () => { if (opts.onGenerate) opts.onGenerate(); };
+      document.body.appendChild(pill);
+    }
+  }
+
+  function startTyping() {
+    const el = document.getElementById('exp-letter-body'); if (!el) return;
+    const text = data.message || ''; let i = 0; el.textContent = '';
+    function step() {
+      if (i >= text.length) { typingDone = true; finishLetter(); return; }
+      const ch = text[i]; el.textContent += ch; if (ch.trim() !== '') tick(); i++;
+      window.__expTypeTimer = setTimeout(step, 26);
+    }
+    el.onclick = () => { clearTimeout(window.__expTypeTimer); el.textContent = text; typingDone = true; finishLetter(); };
+    step();
+  }
+  function finishLetter() {
+    const signEl = document.getElementById('exp-sign'); if (signEl) signEl.style.opacity = '1';
+    setTimeout(() => { boardShown = true; r(); }, 500);
+  }
+  function visionBoardHtml() {
+    const rot = [-5, 3, -3], tapeOrPin = ['tape', 'pin', 'tape'];
+    return `
+    <div class="exp-rise" style="max-width:640px;width:100%;margin-top:44px;text-align:center">
+      <div style="font-family:'Fraunces',serif;font-style:italic;font-size:24px;color:#241f2e;margin-bottom:26px">Little moments</div>
+      <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap">
+        ${[0,1,2].map(i => `
+          <div class="exp-board-card exp-card" style="--r:${rot[i]}deg;width:150px;transform:rotate(${rot[i]}deg)">
+            ${tapeOrPin[i] === 'tape' ? '<div class="exp-tape"></div>' : '<div class="exp-pin"></div>'}
+            <img src="${photos[i] || ''}" style="width:100%;height:168px;object-fit:cover;background:#eee4d0" />
+            <div style="font-family:'Kalam',cursive;font-size:14px;color:#5a4d38;margin-top:8px">${VISION_CAPTIONS[i]}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }
+  function soundOnIcon() { return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="#241f2e"/><path d="M16 8.5c1.2 1 1.9 2.2 1.9 3.5s-.7 2.5-1.9 3.5" stroke="#241f2e" stroke-width="1.6" stroke-linecap="round"/></svg>`; }
+  function soundOffIcon() { return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="#8a8072"/><path d="M16 9l5 6M21 9l-5 6" stroke="#8a8072" stroke-width="1.6" stroke-linecap="round"/></svg>`; }
+  function kintsugiVeins(op) {
+    return `<svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" preserveAspectRatio="none" viewBox="0 0 400 800">
+      <path d="M0 90 L120 160 L90 260 L200 330" stroke="#e6c25c" stroke-width="1.4" fill="none" opacity="${op}"/>
+      <path d="M400 620 L280 560 L320 470 L220 400" stroke="#e6c25c" stroke-width="1.4" fill="none" opacity="${op}"/>
+    </svg>`;
+  }
+  function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+  r();
+}
+
+/* ═══ boot: route by ?id= (recipient view) vs form/creator ═══ */
+window.addEventListener('load', async () => {
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  if (id) {
+    document.getElementById('pg-view-loading').classList.add('active');
+    try {
+      const data = await loadCardFromSupabase(id);
+      document.getElementById('pg-view-loading').classList.remove('active');
+      renderExperience(document.getElementById('exp-mount'), data, { preview: false });
+    } catch (e) {
+      console.error(e);
+      document.getElementById('pg-view-loading').classList.remove('active');
+      document.getElementById('pg-view-error').classList.add('active');
+    }
+  } else {
+    showPage('pg-form');
+  }
+});
 </script>
 </body>
 </html>
