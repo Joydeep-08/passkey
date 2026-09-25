@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Great+Vibes&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Fredoka:wght@600;700&family=Great+Vibes&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet" />
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -42,7 +42,7 @@ body{
 .inp:focus{box-shadow:3px 3px 0 var(--accent)}
 .pin-box{width:48px;height:56px;text-align:center;font-size:22px;font-family:'Space Grotesk',sans-serif;font-weight:700}
 .share-banner{background:var(--mint);color:var(--ink);border-bottom:3px solid var(--ink);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-weight:600}
-.photo-slot{border:3px dashed var(--ink);border-radius:16px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--blush);position:relative;overflow:hidden;transition:.2s;max-width:220px;margin:0 auto}
+.photo-slot{border:3px dashed var(--ink);border-radius:16px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--blush);position:relative;overflow:hidden;transition:.2s;max-width:280px;margin:0 auto}
 .photo-slot:hover{background:var(--lilac)}.photo-slot img{width:100%;height:100%;object-fit:cover}
 .photo-slot .remove-x{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:8px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border:2px solid #fff}
 .seg-toggle{display:flex;border:3px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
@@ -64,7 +64,7 @@ body{
 <!-- FORM -->
 <div class="page" id="pg-form">
   <div class="flex items-center justify-center min-h-screen p-6">
-    <div class="card w-full max-w-lg p-10 fade-in my-10">
+    <div class="card w-full max-w-2xl p-10 fade-in my-10">
       <div class="mb-8">
         <div class="font-brute" style="font-size:38px;line-height:1.15">Make it magical ✨</div>
         <p class="text-[#6b5a52] text-sm mt-2">A locked surprise with 3 gifts inside — a cake, a certificate and your letter. Fill this in, preview it, then get a link.</p>
@@ -88,8 +88,12 @@ body{
         </div>
         <div><label class="block text-xs font-brute uppercase tracking-wider mb-2">Passcode Hint <span class="normal-case font-normal text-[#8a7268]">(optional)</span></label><input id="f-hint" class="inp" placeholder="e.g. the date we met" /></div>
         <div>
-          <label class="block text-xs font-brute uppercase tracking-wider mb-2">Their Photo *</label>
-          <div class="photo-slot" id="slot-0" onclick="pickPhoto(0)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Tap to upload<br><span class="text-[10px] opacity-70">(shown on the lock screen)</span></span></div>
+          <label class="block text-xs font-brute uppercase tracking-wider mb-2">3 Photos *</label>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="photo-slot" id="slot-0" onclick="pickPhoto(0)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Photo 1<br><span class="text-[10px] opacity-70">(lock screen)</span></span></div>
+            <div class="photo-slot" id="slot-1" onclick="pickPhoto(1)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Photo 2<br><span class="text-[10px] opacity-70">(certificate)</span></span></div>
+            <div class="photo-slot" id="slot-2" onclick="pickPhoto(2)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Photo 3</span></div>
+          </div>
           <p class="text-[11px] text-[#8a7268] mt-1 text-center">Chosen from your device — no camera needed.</p>
           <input type="file" id="file-input" accept="image/*" class="hidden" />
         </div>
@@ -101,7 +105,7 @@ You make ordinary days feel like something worth keeping. Thank you for the pati
 
 This little surprise is my way of saying it — in my own words, in my own time. I'm really lucky to have you.</textarea>
         </div>
-        <div id="form-err" class="text-[#c23b3b] text-sm hidden font-medium">Please fill in both names, a 4-digit passcode, and their photo.</div>
+        <div id="form-err" class="text-[#c23b3b] text-sm hidden font-medium">Please fill in both names, a 4-digit passcode, and all 3 photos.</div>
         <button class="btn-primary w-full mt-2 pulse-btn" onclick="gotoPreview()">Preview It →</button>
       </div>
     </div>
@@ -179,7 +183,7 @@ async function loadCardFromSupabase(id) {
 }
 async function withRetry(fn, n = 4) { let e; for (let i = 0; i < n; i++) { try { return await fn(); } catch (x) { e = x; await new Promise(r => setTimeout(r, 1000 * 2 ** i)); } } throw e; }
 
-let state = { recipient: '', sender: '', passcode: '', hint: '', message: '', forType: 'girlfriend', photoFiles: [null], photoPreviewUrls: [null], finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null, draftId: null };
+let state = { recipient: '', sender: '', passcode: '', hint: '', message: '', forType: 'girlfriend', photoFiles: [null, null, null], photoPreviewUrls: [null, null, null], finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null, draftId: null };
 let activeSlot = null, formType = 'girlfriend';
 
 function showPage(id) {
@@ -202,7 +206,8 @@ function setSlotPhoto(idx, f) {
 }
 function removePhoto(idx) {
   state.photoFiles[idx] = null; state.photoPreviewUrls[idx] = null;
-  $id('slot-' + idx).innerHTML = `<span class="text-xs font-medium text-[#5a4740] px-2 text-center">Tap to upload<br><span class="text-[10px] opacity-70">(shown on the lock screen)</span></span>`;
+  const l = ['Photo 1<br><span class="text-[10px] opacity-70">(lock screen)</span>', 'Photo 2<br><span class="text-[10px] opacity-70">(certificate)</span>', 'Photo 3'];
+  $id('slot-' + idx).innerHTML = `<span class="text-xs font-medium text-[#5a4740] px-2 text-center">${l[idx]}</span>`;
 }
 document.addEventListener('DOMContentLoaded', () => {
   $id('file-input').addEventListener('change', e => { const f = e.target.files[0]; if (!f || activeSlot === null) return; setSlotPhoto(activeSlot, f); e.target.value = ''; });
@@ -216,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function gotoPreview() {
   const r = $id('f-recipient').value.trim(), s = $id('f-sender').value.trim(), hint = $id('f-hint').value.trim(), message = $id('f-message').value.trim();
   const pin = Array.from(document.querySelectorAll('.pin-box')).map(b => b.value).join('');
-  if (!r || !s || pin.length !== 4 || !state.photoFiles[0] || !message) { $id('form-err').classList.remove('hidden'); return; }
+  if (!r || !s || pin.length !== 4 || !state.photoFiles.every(f => f) || !message) { $id('form-err').classList.remove('hidden'); return; }
   $id('form-err').classList.add('hidden');
   Object.assign(state, { recipient: r, sender: s, passcode: pin, hint, message, forType: formType });
   renderExperience($id('preview-mount'), { recipient: r, sender: s, passcode: pin, hint, message, forType: formType, photos: state.photoPreviewUrls }, { preview: true, onGenerate: startGenerateLink });
@@ -253,8 +258,9 @@ async function onPaymentSuccess(paymentId) {
   err.classList.add('hidden'); btn.disabled = true; btn.textContent = 'Generating your link...';
   try {
     if (!state.draftId) state.draftId = crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now();
-    const url = await withRetry(() => uploadPhoto(state.photoFiles[0], state.draftId, 1));
-    await withRetry(() => saveCardToSupabase(state.draftId, { recipient: state.recipient, sender: state.sender, passcode: state.passcode, hint: state.hint, message: state.message, forType: state.forType, photos: [url] }));
+    const urls = [];
+    for (let i = 0; i < 3; i++) urls.push(await withRetry(() => uploadPhoto(state.photoFiles[i], state.draftId, i + 1)));
+    await withRetry(() => saveCardToSupabase(state.draftId, { recipient: state.recipient, sender: state.sender, passcode: state.passcode, hint: state.hint, message: state.message, forType: state.forType, photos: urls }));
     const shareUrl = `${location.origin}${location.pathname}?id=${state.draftId}`;
     state.shareUrl = shareUrl; closePayModal(); $id('watermark').style.display = 'none';
     document.querySelector('#share-banner span').textContent = "🎉 Your link is ready! Share it whenever you're ready.";
@@ -313,6 +319,13 @@ function downloadCertificate() {
   .out .fl{opacity:0;animation:none;transform:scale(0);transition:.5s}.sm{opacity:0}.out .sm{animation:xsm 1.8s ease-out both}
   .show{animation:xp .8s cubic-bezier(.2,1.4,.4,1) both}
   .x-cert{position:relative;background:linear-gradient(145deg,#fffaf0,#fbeed2);color:#3a2228;max-width:520px;width:100%;padding:34px 26px;border-radius:8px;border:3px solid var(--ink);box-shadow:var(--shadow-lg);animation:xp .8s ease both}
+  .cert-photo{width:92px;height:92px;border-radius:50%;object-fit:cover;border:4px solid #c9962b;box-shadow:0 4px 10px rgba(0,0,0,.3);margin:0 auto 12px;display:block;background:#eee}
+  .grow-stack{position:relative;width:270px;margin:16px auto 40px}
+  .grow-main{border:4px solid var(--ink);border-radius:18px;box-shadow:var(--shadow-lg);transform:rotate(-3deg);background:var(--paper);padding:8px}
+  .grow-main img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;display:block;background:#e9d9cf}
+  .grow-secondary{position:absolute;width:132px;bottom:-30px;right:-34px;border:4px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);transform:rotate(7deg);background:var(--paper);padding:5px;z-index:2}
+  .grow-secondary img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:9px;display:block;background:#e9d9cf}
+  .grow-heading{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;color:#fff;text-shadow:-2px -2px 0 var(--ink),2px -2px 0 var(--ink),-2px 2px 0 var(--ink),2px 2px 0 var(--ink);line-height:1.15}
   .scrap-grid{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;max-width:640px;margin:0 auto 8px}
   .scrap-card{position:relative;width:190px;background:var(--paper);border:3px solid var(--ink);border-radius:12px;padding:10px 10px 14px;box-shadow:var(--shadow);animation:xf .7s ease both}
   .scrap-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;border:2px solid var(--ink);background:#e9d9cf;display:block}
@@ -374,15 +387,16 @@ function renderExperience(el, data, opts) {
   }
 
   /* 2 · gift boxes */
-  const GC = [['#F2A6B4', '#EF5D77'], ['#F6C445', '#F2A6B4'], ['#B9AEF0', '#8FD9B6']];
-  const giftSVG = (i, open) => { const [a, b] = GC[i]; return `<svg viewBox="0 0 120 130" width="112" height="122"><g style="transform-origin:60px 50px;${open ? 'transform:translateY(-16px) rotate(-16deg)' : ''}"><rect x="8" y="34" width="104" height="24" rx="5" fill="${a}" stroke="#221B16" stroke-width="2"/><rect x="52" y="34" width="16" height="24" fill="${b}"/><path d="M60 34C38 4 12 24 60 34C108 24 82 4 60 34Z" fill="${b}" stroke="#221B16" stroke-width="2"/></g><rect x="14" y="58" width="92" height="66" rx="5" fill="${a}" stroke="#221B16" stroke-width="2"/><rect x="14" y="58" width="92" height="14" fill="#000" opacity=".1"/><rect x="52" y="58" width="16" height="66" fill="${b}"/></svg>`; };
+  const GC = [['#F2A6B4', '#EF5D77'], ['#8FD9B6', '#3E7CB1'], ['#F6C445', '#F2A6B4'], ['#B9AEF0', '#8FD9B6']];
+  const SCENES = ['cake', 'grow', 'cert', 'memo'];
+  const giftSVG = (i, open) => { const [a, b] = GC[i]; return `<svg viewBox="0 0 120 130" width="102" height="112"><g style="transform-origin:60px 50px;${open ? 'transform:translateY(-16px) rotate(-16deg)' : ''}"><rect x="8" y="34" width="104" height="24" rx="5" fill="${a}" stroke="#221B16" stroke-width="2"/><rect x="52" y="34" width="16" height="24" fill="${b}"/><path d="M60 34C38 4 12 24 60 34C108 24 82 4 60 34Z" fill="${b}" stroke="#221B16" stroke-width="2"/></g><rect x="14" y="58" width="92" height="66" rx="5" fill="${a}" stroke="#221B16" stroke-width="2"/><rect x="14" y="58" width="92" height="14" fill="#000" opacity=".1"/><rect x="52" y="58" width="16" height="66" fill="${b}"/></svg>`; };
   function gifts() {
-    const names = ['A cake', 'A certificate', 'Our moments'];
-    set(`<div class="x-in"><div class="x-h" style="font-size:34px;margin-bottom:6px">Pick your gift</div><p style="opacity:.8;font-size:14px;margin-bottom:34px;font-family:'Space Grotesk',sans-serif">3 little gifts for you, ${nm}. Open them one by one.</p>
-      <div style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center">${[0, 1, 2].map(i => `<div class="x-gift ${i < opened ? '' : i > opened ? 'lk' : 'go'}" data-g="${i}">${giftSVG(i, i < opened)}<div style="font-size:13px;font-weight:700;margin-top:6px;font-family:'Space Grotesk',sans-serif">${i < opened ? '✓ ' + names[i] : i > opened ? '🔒 Gift ' + (i + 1) : 'Gift ' + (i + 1) + ' — tap!'}</div></div>`).join('')}</div></div>`, 'x-fest');
+    const names = ['A cake', 'Growing together', 'A certificate', 'Our moments'];
+    set(`<div class="x-in"><div class="x-h" style="font-size:32px;margin-bottom:6px">Pick your gift</div><p style="opacity:.8;font-size:14px;margin-bottom:30px;font-family:'Space Grotesk',sans-serif">4 little gifts for you, ${nm}. Open them one by one.</p>
+      <div style="display:flex;gap:22px;flex-wrap:wrap;justify-content:center;max-width:520px">${[0, 1, 2, 3].map(i => `<div class="x-gift ${i < opened ? '' : i > opened ? 'lk' : 'go'}" data-g="${i}">${giftSVG(i, i < opened)}<div style="font-size:12px;font-weight:700;margin-top:6px;font-family:'Space Grotesk',sans-serif">${i < opened ? '✓ ' + names[i] : i > opened ? '🔒 Gift ' + (i + 1) : 'Gift ' + (i + 1) + ' — tap!'}</div></div>`).join('')}</div></div>`, 'x-fest');
     el.querySelectorAll('[data-g]').forEach(g => g.onclick = () => {
       const i = +g.dataset.g;
-      if (i === opened) { tone(520, .15); tone(780, .25, .08); go(['cake', 'cert', 'memo'][i]); }
+      if (i === opened) { tone(520, .15); tone(780, .25, .08); go(SCENES[i]); }
       else { g.style.animation = 'xs .5s'; setTimeout(() => g.style.animation = '', 500); }
     });
   }
@@ -406,11 +420,21 @@ function renderExperience(el, data, opts) {
     };
   }
 
+  /* 3.5 · growing together */
+  function grow() {
+    set(`<div class="x-in"><div class="grow-heading">Growing together 🌱</div>
+      <div class="grow-stack"><div class="grow-main"><img src="photo.jpeg" onerror="this.style.background='#e9d9cf'" /></div><div class="grow-secondary"><img src="photo.png" onerror="this.style.background='#e9d9cf'" /></div></div>
+      <p style="opacity:.75;font-size:14px;margin-bottom:10px;font-family:'Kalam',cursive;font-size:17px">every little season with you, ${nm} — worth it.</p>
+      <button class="x-btn" id="nx" style="margin-top:14px">Next gift →</button></div>`, 'x-fest');
+    tone(494, .3); tone(622, .35, .12); tone(740, .4, .24);
+    $('#nx').onclick = () => go('gifts', 2);
+  }
+
   /* 4 · certificate */
   function cert() {
     const dt = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
     set(`<div class="x-in"><div class="x-h" style="font-size:27px;margin-bottom:22px">Gift 2 · something official</div>
-      <div class="x-cert" id="cert-node"><div style="letter-spacing:6px;font-size:11px;font-weight:600;color:#a8762a">CERTIFICATE OF LOVE</div>
+      <div class="x-cert" id="cert-node"><img class="cert-photo" src="${P[1] || P[0] || ''}" crossorigin="anonymous" /><div style="letter-spacing:6px;font-size:11px;font-weight:600;color:#a8762a">CERTIFICATE OF LOVE</div>
         <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:36px;line-height:1.1;margin:14px 0 4px;color:${data.forType === 'boyfriend' ? '#3E7CB1' : '#EF5D77'}">${certTitle}</div>
         <div style="font-size:13px;color:#8a5d55">in the whole wide world</div>
         <div style="font-size:12px;letter-spacing:2px;margin:22px 0 4px;color:#a8762a">PROUDLY PRESENTED TO</div>
@@ -425,12 +449,12 @@ function renderExperience(el, data, opts) {
         <button class="x-btn" id="nx">Next gift →</button>
       </div></div>`, 'x-maroon');
     tone(523, .3); tone(659, .3, .12); tone(784, .3, .24); tone(1046, .6, .36);
-    $('#nx').onclick = () => go('gifts', 2);
+    $('#nx').onclick = () => go('gifts', 3);
   }
 
   /* 5 · photos + letter */
   function memo() {
-    const photos = [P[0] || '', 'photo.jpeg', 'photo1.jpeg'];
+    const photos = [P[0] || '', P[1] || '', P[2] || ''];
     const caps = ['the smile i fell for', 'still my favourite plan: you', 'proof we make a good team'];
     const rt = [-4, 3, -2];
     set(`<div class="x-in" style="padding-bottom:80px">
@@ -444,7 +468,7 @@ function renderExperience(el, data, opts) {
     tone(660, .4); tone(880, .55, .12);
   }
 
-  function draw() { ({ locked: lock, gifts, cake, cert, memo })[scene](); }
+  function draw() { ({ locked: lock, gifts, cake, grow, cert, memo })[scene](); }
   draw();
 }
 
