@@ -7,82 +7,101 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Great+Vibes&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet" />
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;min-height:100vh;background:radial-gradient(60% 45% at 8% 6%,#ff9ec4 0,transparent 60%),radial-gradient(55% 45% at 95% 12%,#ffc27a 0,transparent 60%),radial-gradient(60% 50% at 50% 100%,#9b5de5 0,transparent 65%),linear-gradient(160deg,#6b0f2a,#8b1538 50%,#4a0818);background-attachment:fixed}
+:root{
+  --cream:#FCF6EA; --paper:#FFFDF8; --ink:#221B16;
+  --rose:#EF5D77; --denim:#3E7CB1; --accent:var(--rose);
+  --mustard:#F6C445; --mint:#8FD9B6; --lilac:#B9AEF0; --blush:#F7C9D2;
+  --shadow:5px 5px 0 var(--ink); --shadow-lg:8px 8px 0 var(--ink);
+}
+body{
+  font-family:'Inter',sans-serif; min-height:100vh; color:var(--ink);
+  background-color:var(--cream);
+  background-image:radial-gradient(rgba(34,27,22,.09) 1.5px, transparent 1.5px);
+  background-size:22px 22px;
+}
 .font-display{font-family:'Fraunces',serif;font-style:italic}
+.font-brute{font-family:'Space Grotesk',sans-serif;font-weight:700}
 .page{display:none;min-height:100vh}.page.active{display:flex;flex-direction:column}
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulse{50%{transform:scale(1.05)}}
-.fade-in{animation:fadeIn .45s ease both}.spin{animation:spin .8s linear infinite}.pulse-btn{animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}}
+.fade-in{animation:fadeIn .45s ease both}.spin{animation:spin .8s linear infinite}
+.pulse-btn{animation:pulse 1.6s ease-in-out infinite}
 .watermark-wrap{position:fixed;inset:0;pointer-events:none;z-index:9999;display:flex;flex-direction:column;justify-content:space-around;overflow:hidden;mix-blend-mode:difference}
-.watermark-row{display:flex;gap:100px;white-space:nowrap;font-weight:700;font-size:17px;letter-spacing:5px;color:#fff;opacity:.2;transform:rotate(-22deg)}
-.btn-primary{padding:12px 32px;border-radius:30px;font-size:13px;font-weight:600;letter-spacing:.6px;cursor:pointer;border:1.5px solid #7a0f2e;background:linear-gradient(135deg,#7a0f2e,#c2185b);color:#fff;font-family:inherit;box-shadow:0 10px 22px -8px rgba(139,21,56,.7);transition:transform .15s}
-.btn-primary:hover{transform:scale(1.02)}.btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.btn-outline{padding:12px 32px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #8b1538;background:transparent;color:#8b1538;font-family:inherit;transition:.2s}
-.btn-outline:hover{background:#8b1538;color:#fff}
-.card{background:linear-gradient(180deg,#fffaf5,#fff1ea);border:1.5px solid #f0b7a4;border-radius:14px;box-shadow:0 30px 60px -20px rgba(40,0,15,.6)}
-#pg-form .font-display{background:linear-gradient(90deg,#8b1538,#e0457b 55%,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent!important}
-.modal-bg{position:fixed;inset:0;background:rgba(40,5,18,.7);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal-box{background:#fffaf5;border:1.5px solid #f0b7a4;border-radius:18px;width:100%;max-width:420px;padding:36px 32px;position:relative;max-height:90vh;overflow-y:auto}
-.inp{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #ecc5b6;background:#fffefb;font-size:14px;color:#241f2e;outline:none;font-family:inherit;transition:.2s}
-.inp:focus{border-color:#c2185b;box-shadow:0 0 0 3px rgba(194,24,91,.15)}
-.pin-box{width:48px;height:56px;text-align:center;font-size:22px}
-.share-banner{background:#2e6b4f;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.photo-slot{border:1.5px dashed #e08aa5;border-radius:12px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff5f6;position:relative;overflow:hidden;transition:.2s}
-.photo-slot:hover{border-color:#8b1538}.photo-slot img{width:100%;height:100%;object-fit:cover}
-.photo-slot .remove-x{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer}
-#pg-loading,#pg-view-loading,#pg-view-error{display:none;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;color:#fff;text-align:center}
+.watermark-row{display:flex;gap:100px;white-space:nowrap;font-weight:700;font-size:17px;letter-spacing:5px;color:#fff;opacity:.18;transform:rotate(-22deg)}
+.btn-primary{padding:12px 32px;border-radius:14px;font-size:13px;font-weight:700;letter-spacing:.4px;cursor:pointer;border:3px solid var(--ink);background:var(--accent);color:#fff;font-family:'Space Grotesk',sans-serif;box-shadow:var(--shadow);transition:transform .1s,box-shadow .1s}
+.btn-primary:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink)}
+.btn-primary:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:var(--shadow)}
+.btn-outline{padding:12px 32px;border-radius:14px;font-size:13px;font-weight:700;cursor:pointer;border:3px solid var(--ink);background:var(--paper);color:var(--ink);font-family:'Space Grotesk',sans-serif;box-shadow:var(--shadow);transition:transform .1s,box-shadow .1s}
+.btn-outline:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink)}
+.card{background:var(--paper);border:3px solid var(--ink);border-radius:20px;box-shadow:var(--shadow-lg)}
+.inp{width:100%;padding:11px 14px;border-radius:12px;border:3px solid var(--ink);background:var(--paper);font-size:14px;color:var(--ink);outline:none;font-family:inherit;transition:.15s}
+.inp:focus{box-shadow:3px 3px 0 var(--accent)}
+.pin-box{width:48px;height:56px;text-align:center;font-size:22px;font-family:'Space Grotesk',sans-serif;font-weight:700}
+.share-banner{background:var(--mint);color:var(--ink);border-bottom:3px solid var(--ink);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-weight:600}
+.photo-slot{border:3px dashed var(--ink);border-radius:16px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--blush);position:relative;overflow:hidden;transition:.2s;max-width:220px;margin:0 auto}
+.photo-slot:hover{background:var(--lilac)}.photo-slot img{width:100%;height:100%;object-fit:cover}
+.photo-slot .remove-x{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:8px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border:2px solid #fff}
+.seg-toggle{display:flex;border:3px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.seg-btn{flex:1;padding:12px 10px;background:var(--paper);color:var(--ink);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;cursor:pointer;border:none;transition:.15s}
+.seg-btn+.seg-btn{border-left:3px solid var(--ink)}
+.seg-btn.active{background:var(--accent);color:#fff}
+#pg-loading,#pg-view-loading,#pg-view-error{display:none;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;color:var(--ink);text-align:center;background:var(--cream)}
 #pg-loading.active,#pg-view-loading.active,#pg-view-error.active{display:flex}
-#camera-video,#camera-canvas{width:100%;border-radius:10px;background:#000;max-height:340px;object-fit:cover}
+.modal-bg{position:fixed;inset:0;background:rgba(34,27,22,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:var(--paper);border:3px solid var(--ink);border-radius:22px;width:100%;max-width:420px;padding:36px 32px;position:relative;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg)}
 </style>
 </head>
 <body>
 
-<div id="pg-loading"><div style="width:36px;height:36px;border:3px solid #ffffff55;border-top-color:#fff;border-radius:50%" class="spin"></div><div class="font-display" style="font-size:26px" id="loading-text">One moment...</div></div>
-<div id="pg-view-loading"><div style="width:36px;height:36px;border:3px solid #ffffff55;border-top-color:#fff;border-radius:50%" class="spin"></div><div class="font-display" style="font-size:26px">Opening it gently...</div></div>
-<div id="pg-view-error"><div class="font-display" style="font-size:28px">This link isn't valid</div><p style="font-size:14px;max-width:360px;opacity:.8">The surprise you're looking for doesn't exist, or the link is incomplete.</p></div>
+<div id="pg-loading"><div style="width:36px;height:36px;border:4px solid var(--ink);border-top-color:var(--accent);border-radius:50%" class="spin"></div><div class="font-display" style="font-size:26px">One moment...</div></div>
+<div id="pg-view-loading"><div style="width:36px;height:36px;border:4px solid var(--ink);border-top-color:var(--accent);border-radius:50%" class="spin"></div><div class="font-display" style="font-size:26px">Opening it gently...</div></div>
+<div id="pg-view-error"><div class="font-display" style="font-size:28px">This link isn't valid</div><p style="font-size:14px;max-width:360px;opacity:.75">The surprise you're looking for doesn't exist, or the link is incomplete.</p></div>
 
 <!-- FORM -->
 <div class="page" id="pg-form">
   <div class="flex items-center justify-center min-h-screen p-6">
     <div class="card w-full max-w-lg p-10 fade-in my-10">
       <div class="mb-8">
-        <div class="font-display" style="font-size:44px;line-height:1.15">Make it magical</div>
-        <p class="text-[#8a5d55] text-sm mt-2">A locked surprise with 3 gifts inside — a cake, a certificate and your letter. Fill this in, preview it, then get a link.</p>
+        <div class="font-brute" style="font-size:38px;line-height:1.15">Make it magical ✨</div>
+        <p class="text-[#6b5a52] text-sm mt-2">A locked surprise with 3 gifts inside — a cake, a certificate and your letter. Fill this in, preview it, then get a link.</p>
       </div>
       <div class="space-y-5">
-        <div><label class="block text-xs font-semibold text-[#7a3b48] uppercase tracking-wider mb-2">Their Name *</label><input id="f-recipient" class="inp" placeholder="e.g. Ananya" /></div>
-        <div><label class="block text-xs font-semibold text-[#7a3b48] uppercase tracking-wider mb-2">Your Name *</label><input id="f-sender" class="inp" placeholder="e.g. Rohan" /></div>
         <div>
-          <label class="block text-xs font-semibold text-[#7a3b48] uppercase tracking-wider mb-2">4-Digit Passcode *</label>
+          <label class="block text-xs font-brute uppercase tracking-wider mb-2">This little surprise is for my *</label>
+          <div class="seg-toggle">
+            <button type="button" class="seg-btn active" data-type="girlfriend" onclick="selectType('girlfriend')">💗 Girlfriend</button>
+            <button type="button" class="seg-btn" data-type="boyfriend" onclick="selectType('boyfriend')">💙 Boyfriend</button>
+          </div>
+        </div>
+        <div><label class="block text-xs font-brute uppercase tracking-wider mb-2">Their Name *</label><input id="f-recipient" class="inp" placeholder="e.g. Ananya" /></div>
+        <div><label class="block text-xs font-brute uppercase tracking-wider mb-2">Your Name *</label><input id="f-sender" class="inp" placeholder="e.g. Rohan" /></div>
+        <div>
+          <label class="block text-xs font-brute uppercase tracking-wider mb-2">4-Digit Passcode *</label>
           <div class="flex gap-2">
             <input maxlength="1" inputmode="numeric" class="inp pin-box" /><input maxlength="1" inputmode="numeric" class="inp pin-box" /><input maxlength="1" inputmode="numeric" class="inp pin-box" /><input maxlength="1" inputmode="numeric" class="inp pin-box" />
           </div>
-          <p class="text-[11px] text-[#b08a80] mt-1">They'll need this to unlock it.</p>
+          <p class="text-[11px] text-[#8a7268] mt-1">They'll need this to unlock it.</p>
         </div>
-        <div><label class="block text-xs font-semibold text-[#7a3b48] uppercase tracking-wider mb-2">Passcode Hint <span class="normal-case font-normal text-[#b08a80]">(optional)</span></label><input id="f-hint" class="inp" placeholder="e.g. the date we met" /></div>
+        <div><label class="block text-xs font-brute uppercase tracking-wider mb-2">Passcode Hint <span class="normal-case font-normal text-[#8a7268]">(optional)</span></label><input id="f-hint" class="inp" placeholder="e.g. the date we met" /></div>
         <div>
-          <label class="block text-xs font-semibold text-[#7a3b48] uppercase tracking-wider mb-2">3 Photos *</label>
-          <div class="grid grid-cols-3 gap-3">
-            <div class="photo-slot" id="slot-0" onclick="pickPhoto(0)"><span class="text-xs text-[#b08a80] px-2 text-center">Photo 1<br><span class="text-[10px]">(lock screen)</span></span></div>
-            <div class="photo-slot" id="slot-1" onclick="pickPhoto(1)"><span class="text-xs text-[#b08a80] px-2 text-center">Photo 2</span></div>
-            <div class="photo-slot" id="slot-2" onclick="pickPhoto(2)"><span class="text-xs text-[#b08a80] px-2 text-center">Photo 3</span></div>
-          </div>
-          <p class="text-[11px] text-[#b08a80] mt-1">Tapping a slot opens your camera — you can upload instead if you'd rather.</p>
+          <label class="block text-xs font-brute uppercase tracking-wider mb-2">Their Photo *</label>
+          <div class="photo-slot" id="slot-0" onclick="pickPhoto(0)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Tap to upload<br><span class="text-[10px] opacity-70">(shown on the lock screen)</span></span></div>
+          <p class="text-[11px] text-[#8a7268] mt-1 text-center">Chosen from your device — no camera needed.</p>
           <input type="file" id="file-input" accept="image/*" class="hidden" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-[#7a3b48] uppercase tracking-wider mb-2">Your Letter *</label>
+          <label class="block text-xs font-brute uppercase tracking-wider mb-2">Your Letter *</label>
           <textarea id="f-message" class="inp" rows="7" style="resize:vertical">I've been wanting to say this properly for a while.
 
 You make ordinary days feel like something worth keeping. Thank you for the patience, the laughs, and for being exactly who you are.
 
 This little surprise is my way of saying it — in my own words, in my own time. I'm really lucky to have you.</textarea>
         </div>
-        <div id="form-err" class="text-[#a4443a] text-sm hidden">Please fill in both names, a 4-digit passcode, and all 3 photos.</div>
+        <div id="form-err" class="text-[#c23b3b] text-sm hidden font-medium">Please fill in both names, a 4-digit passcode, and their photo.</div>
         <button class="btn-primary w-full mt-2 pulse-btn" onclick="gotoPreview()">Preview It →</button>
       </div>
     </div>
@@ -91,13 +110,13 @@ This little surprise is my way of saying it — in my own words, in my own time.
 
 <!-- PREVIEW -->
 <div class="page" id="pg-preview">
-  <div class="flex items-center justify-between flex-wrap gap-3 px-5 py-3 bg-[#fffaf5] border-b border-[#f0b7a4] sticky top-0 z-20">
-    <div><div class="text-[10px] text-[#b08a80] uppercase tracking-widest">Preview mode</div><div class="text-sm text-[#241f2e] font-medium">This is what they'll see</div></div>
+  <div class="flex items-center justify-between flex-wrap gap-3 px-5 py-3 bg-[var(--paper)] border-b-[3px] border-[var(--ink)] sticky top-0 z-20">
+    <div><div class="text-[10px] font-brute uppercase tracking-widest opacity-60">Preview mode</div><div class="text-sm font-medium">This is what they'll see</div></div>
     <button class="btn-outline text-xs px-4 py-2" onclick="showPage('pg-form')">← Edit</button>
   </div>
   <div id="share-banner" class="share-banner hidden">
     <span class="text-sm">Your link is ready — send it whenever you're ready.</span>
-    <div class="flex gap-2 items-center"><code id="share-url-text" class="text-xs bg-white/20 px-2 py-1 rounded"></code><button onclick="copyLink()" class="bg-white text-[#2e6b4f] text-xs font-bold px-3 py-1 rounded-lg">Copy</button></div>
+    <div class="flex gap-2 items-center"><code id="share-url-text" class="text-xs bg-white/50 px-2 py-1 rounded border-2 border-[var(--ink)]"></code><button onclick="copyLink()" class="bg-[var(--ink)] text-white text-xs font-bold px-3 py-1 rounded-lg">Copy</button></div>
   </div>
   <div class="watermark-wrap" id="watermark">
     <div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div><div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div><div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div><div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div><div class="watermark-row"><span>PREVIEW •</span><span>PREVIEW •</span><span>PREVIEW •</span></div>
@@ -107,42 +126,27 @@ This little surprise is my way of saying it — in my own words, in my own time.
 
 <div id="exp-mount"></div>
 
-<!-- CAMERA MODAL -->
-<div class="modal-bg hidden" id="camera-modal">
-  <div class="modal-box fade-in">
-    <button onclick="closeCameraModal()" class="absolute top-4 right-4 text-2xl text-[#b08a80] leading-none">×</button>
-    <div class="font-display mb-4" style="font-size:24px;color:#241f2e">Take a photo</div>
-    <video id="camera-video" autoplay playsinline muted></video><canvas id="camera-canvas" class="hidden"></canvas>
-    <div id="camera-error" class="text-[#a4443a] text-sm mt-3 hidden">Couldn't access your camera. You can upload one instead.</div>
-    <div class="flex gap-2 mt-4">
-      <button id="cam-capture-btn" class="btn-primary flex-1" onclick="capturePhoto()">Capture</button>
-      <button id="cam-retake-btn" class="btn-outline flex-1 hidden" onclick="retakePhoto()">Retake</button>
-      <button id="cam-use-btn" class="btn-primary flex-1 hidden" onclick="useCapturedPhoto()">Use This</button>
-    </div>
-    <div class="text-center mt-4"><span class="text-xs text-[#b08a80] underline cursor-pointer" onclick="uploadInstead()">or upload from your gallery</span></div>
-  </div>
-</div>
-
 <!-- PAY MODAL -->
 <div class="modal-bg hidden" id="pay-modal">
   <div class="modal-box fade-in">
-    <button onclick="closePayModal()" class="absolute top-4 right-4 text-2xl text-[#b08a80] leading-none">×</button>
-    <div class="mb-6"><div class="font-display" style="font-size:28px;color:#241f2e">Generate Your Link</div><p class="text-xs text-[#b08a80]">Pay once — they get a locked surprise with 3 gifts, hosted forever.</p></div>
-    <div class="card px-5 py-4 mb-5 flex justify-between items-center">
-      <div><div class="text-sm text-[#8a5d55]">Mended — Gift Link</div><div class="text-xs text-[#b08a80] mt-0.5">Shareable link • Hosted forever</div></div>
-      <div class="text-right"><div id="original-price" class="text-xs text-[#b08a80] line-through hidden">₹79</div><div id="final-price" class="text-2xl font-bold" style="color:#8b1538">₹79</div></div>
+    <button onclick="closePayModal()" class="absolute top-4 right-4 text-2xl text-[#8a7268] leading-none font-bold">×</button>
+    <div class="mb-6"><div class="font-brute" style="font-size:26px">Generate Your Link</div><p class="text-xs text-[#8a7268]">Pay once — they get a locked surprise with 3 gifts, hosted forever.</p></div>
+    <div class="card px-5 py-4 mb-5 flex justify-between items-center" style="box-shadow:var(--shadow)">
+      <div><div class="text-sm font-medium">Mended — Gift Link</div><div class="text-xs text-[#8a7268] mt-0.5">Shareable link • Hosted forever</div></div>
+      <div class="text-right"><div id="original-price" class="text-xs text-[#8a7268] line-through hidden">₹79</div><div id="final-price" class="text-2xl font-brute" style="color:var(--accent)">₹79</div></div>
     </div>
     <div class="mb-5">
-      <label class="block text-xs font-semibold text-[#7a3b48] uppercase tracking-wider mb-2">Coupon Code</label>
+      <label class="block text-xs font-brute uppercase tracking-wider mb-2">Coupon Code</label>
       <div class="flex gap-2"><input id="coupon-inp" class="inp flex-1" placeholder=" Optional " style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')applyCoupon()" /><button onclick="applyCoupon()" class="btn-outline text-xs px-4 py-2 whitespace-nowrap">Apply</button></div>
-      <div id="coupon-msg" class="text-xs mt-2 font-medium hidden"></div>
+      <div id="coupon-msg" class="text-xs mt-2 font-bold hidden"></div>
     </div>
-    <div id="pay-err" class="text-[#a4443a] text-sm mb-3 hidden"></div>
+    <div id="pay-err" class="text-[#c23b3b] text-sm mb-3 hidden"></div>
     <button id="pay-btn" class="btn-primary w-full" onclick="handlePay()">Pay ₹79 &amp; Get Link</button>
-    <div class="text-center text-[10px] text-[#b08a80] mt-4">Secured by Razorpay · UPI, Cards, Netbanking</div>
+    <div class="text-center text-[10px] text-[#8a7268] mt-4">Secured by Razorpay · UPI, Cards, Netbanking</div>
   </div>
 </div>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
 /* Supabase: table sorry_cards(id uuid pk, data jsonb, created_at) + public bucket "sorry-photos" (anon insert/select policies) */
@@ -175,8 +179,8 @@ async function loadCardFromSupabase(id) {
 }
 async function withRetry(fn, n = 4) { let e; for (let i = 0; i < n; i++) { try { return await fn(); } catch (x) { e = x; await new Promise(r => setTimeout(r, 1000 * 2 ** i)); } } throw e; }
 
-let state = { recipient: '', sender: '', passcode: '', hint: '', message: '', photoFiles: [null, null, null], photoPreviewUrls: [null, null, null], finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null, draftId: null };
-let activeSlot = null;
+let state = { recipient: '', sender: '', passcode: '', hint: '', message: '', forType: 'girlfriend', photoFiles: [null], photoPreviewUrls: [null], finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null, draftId: null };
+let activeSlot = null, formType = 'girlfriend';
 
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -184,38 +188,21 @@ function showPage(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
+function selectType(t) {
+  formType = t;
+  document.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.type === t));
+}
 
-/* ── photo capture ── */
-let cameraStream = null, cameraSlot = null;
+/* ── photo pick (device only) ── */
 const $id = i => document.getElementById(i);
-async function pickPhoto(idx) {
-  cameraSlot = idx; $id('camera-modal').classList.remove('hidden'); $id('camera-error').classList.add('hidden');
-  $id('camera-video').classList.remove('hidden'); $id('camera-canvas').classList.add('hidden');
-  $id('cam-capture-btn').classList.remove('hidden'); $id('cam-retake-btn').classList.add('hidden'); $id('cam-use-btn').classList.add('hidden');
-  try { cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false }); $id('camera-video').srcObject = cameraStream; }
-  catch (e) { $id('camera-error').classList.remove('hidden'); $id('cam-capture-btn').classList.add('hidden'); }
-}
-function closeCameraModal() { if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; } $id('camera-modal').classList.add('hidden'); }
-function capturePhoto() {
-  const v = $id('camera-video'), c = $id('camera-canvas');
-  c.width = v.videoWidth || 640; c.height = v.videoHeight || 480; c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
-  v.classList.add('hidden'); c.classList.remove('hidden');
-  $id('cam-capture-btn').classList.add('hidden'); $id('cam-retake-btn').classList.remove('hidden'); $id('cam-use-btn').classList.remove('hidden');
-}
-function retakePhoto() {
-  $id('camera-video').classList.remove('hidden'); $id('camera-canvas').classList.add('hidden');
-  $id('cam-capture-btn').classList.remove('hidden'); $id('cam-retake-btn').classList.add('hidden'); $id('cam-use-btn').classList.add('hidden');
-}
-function useCapturedPhoto() { $id('camera-canvas').toBlob(b => { if (b) { setSlotPhoto(cameraSlot, b); closeCameraModal(); } }, 'image/jpeg', 0.85); }
-function uploadInstead() { activeSlot = cameraSlot; closeCameraModal(); $id('file-input').click(); }
+function pickPhoto(idx) { activeSlot = idx; $id('file-input').click(); }
 function setSlotPhoto(idx, f) {
   state.photoFiles[idx] = f; const url = URL.createObjectURL(f); state.photoPreviewUrls[idx] = url;
   $id('slot-' + idx).innerHTML = `<img src="${url}" /><div class="remove-x" onclick="event.stopPropagation();removePhoto(${idx})">✕</div>`;
 }
 function removePhoto(idx) {
   state.photoFiles[idx] = null; state.photoPreviewUrls[idx] = null;
-  const l = ['Photo 1<br><span class="text-[10px]">(lock screen)</span>', 'Photo 2', 'Photo 3'];
-  $id('slot-' + idx).innerHTML = `<span class="text-xs text-[#b08a80] px-2 text-center">${l[idx]}</span>`;
+  $id('slot-' + idx).innerHTML = `<span class="text-xs font-medium text-[#5a4740] px-2 text-center">Tap to upload<br><span class="text-[10px] opacity-70">(shown on the lock screen)</span></span>`;
 }
 document.addEventListener('DOMContentLoaded', () => {
   $id('file-input').addEventListener('change', e => { const f = e.target.files[0]; if (!f || activeSlot === null) return; setSlotPhoto(activeSlot, f); e.target.value = ''; });
@@ -229,10 +216,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function gotoPreview() {
   const r = $id('f-recipient').value.trim(), s = $id('f-sender').value.trim(), hint = $id('f-hint').value.trim(), message = $id('f-message').value.trim();
   const pin = Array.from(document.querySelectorAll('.pin-box')).map(b => b.value).join('');
-  if (!r || !s || pin.length !== 4 || !state.photoFiles.every(f => f) || !message) { $id('form-err').classList.remove('hidden'); return; }
+  if (!r || !s || pin.length !== 4 || !state.photoFiles[0] || !message) { $id('form-err').classList.remove('hidden'); return; }
   $id('form-err').classList.add('hidden');
-  Object.assign(state, { recipient: r, sender: s, passcode: pin, hint, message });
-  renderExperience($id('preview-mount'), { recipient: r, sender: s, passcode: pin, hint, message, photos: state.photoPreviewUrls }, { preview: true, onGenerate: startGenerateLink });
+  Object.assign(state, { recipient: r, sender: s, passcode: pin, hint, message, forType: formType });
+  renderExperience($id('preview-mount'), { recipient: r, sender: s, passcode: pin, hint, message, forType: formType, photos: state.photoPreviewUrls }, { preview: true, onGenerate: startGenerateLink });
   $id('share-banner').classList.add('hidden'); $id('watermark').style.display = 'flex';
   showPage('pg-preview');
 }
@@ -248,7 +235,7 @@ function applyCoupon() {
   msg.classList.remove('hidden');
   if (!code) { msg.textContent = ''; msg.classList.add('hidden'); return; }
   const c = CONFIG.COUPONS[code];
-  if (!c) { msg.textContent = '✗ Invalid coupon code'; msg.style.color = '#a4443a'; state.finalAmount = CONFIG.BASE; state.couponApplied = null; op.classList.add('hidden'); fp.textContent = '₹79'; btn.textContent = 'Pay ₹79 & Get Link'; return; }
+  if (!c) { msg.textContent = '✗ Invalid coupon code'; msg.style.color = '#c23b3b'; state.finalAmount = CONFIG.BASE; state.couponApplied = null; op.classList.add('hidden'); fp.textContent = '₹79'; btn.textContent = 'Pay ₹79 & Get Link'; return; }
   state.finalAmount = c.amount; state.couponApplied = code; msg.textContent = '✓ ' + c.label; msg.style.color = '#2e6b4f';
   const d = c.amount === 0 ? 'FREE' : '₹' + (c.amount / 100);
   fp.textContent = d; op.classList.toggle('hidden', c.amount >= CONFIG.BASE);
@@ -258,7 +245,7 @@ function handlePay() {
   $id('pay-err').classList.add('hidden');
   if (state.finalAmount === 0) { onPaymentSuccess('free_' + Math.random().toString(36).slice(2)); return; }
   new Razorpay({ key: CONFIG.RZP_KEY, amount: state.finalAmount, currency: 'INR', name: 'Mended', description: `Gift link for ${state.recipient}`,
-    notes: { coupon: state.couponApplied || '', recipient: state.recipient, sender: state.sender }, theme: { color: '#8b1538' },
+    notes: { coupon: state.couponApplied || '', recipient: state.recipient, sender: state.sender }, theme: { color: '#EF5D77' },
     handler: r => onPaymentSuccess(r.razorpay_payment_id) }).open();
 }
 async function onPaymentSuccess(paymentId) {
@@ -266,17 +253,16 @@ async function onPaymentSuccess(paymentId) {
   err.classList.add('hidden'); btn.disabled = true; btn.textContent = 'Generating your link...';
   try {
     if (!state.draftId) state.draftId = crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now();
-    const urls = [];
-    for (let i = 0; i < 3; i++) urls.push(await withRetry(() => uploadPhoto(state.photoFiles[i], state.draftId, i + 1)));
-    await withRetry(() => saveCardToSupabase(state.draftId, { recipient: state.recipient, sender: state.sender, passcode: state.passcode, hint: state.hint, message: state.message, photos: urls }));
-    const url = `${location.origin}${location.pathname}?id=${state.draftId}`;
-    state.shareUrl = url; closePayModal(); $id('watermark').style.display = 'none';
+    const url = await withRetry(() => uploadPhoto(state.photoFiles[0], state.draftId, 1));
+    await withRetry(() => saveCardToSupabase(state.draftId, { recipient: state.recipient, sender: state.sender, passcode: state.passcode, hint: state.hint, message: state.message, forType: state.forType, photos: [url] }));
+    const shareUrl = `${location.origin}${location.pathname}?id=${state.draftId}`;
+    state.shareUrl = shareUrl; closePayModal(); $id('watermark').style.display = 'none';
     document.querySelector('#share-banner span').textContent = "🎉 Your link is ready! Share it whenever you're ready.";
-    $id('share-url-text').textContent = url.length > 60 ? url.slice(0, 57) + '...' : url;
+    $id('share-url-text').textContent = shareUrl.length > 60 ? shareUrl.slice(0, 57) + '...' : shareUrl;
     $id('share-banner').classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (e) {
     console.error(e);
-    err.innerHTML = 'Payment succeeded, but saving failed.<br><button id="retry-save-btn" class="btn-primary" style="margin-top:10px">Retry Generating Link</button><br><span style="font-size:11px;color:#b08a80">Contact support with payment id: ' + paymentId + '</span>';
+    err.innerHTML = 'Payment succeeded, but saving failed.<br><button id="retry-save-btn" class="btn-primary" style="margin-top:10px">Retry Generating Link</button><br><span style="font-size:11px;color:#8a7268">Contact support with payment id: ' + paymentId + '</span>';
     err.classList.remove('hidden'); btn.disabled = false; btn.textContent = 'Retry — Get Link';
     $id('retry-save-btn').onclick = () => onPaymentSuccess(paymentId);
   }
@@ -285,45 +271,60 @@ function copyLink() {
   if (!state.shareUrl) return;
   navigator.clipboard.writeText(state.shareUrl).then(() => { const b = document.querySelector('#share-banner button'), o = b.textContent; b.textContent = 'Copied!'; setTimeout(() => b.textContent = o, 2000); });
 }
+function downloadCertificate() {
+  const node = document.getElementById('cert-node');
+  if (!node || !window.html2canvas) return;
+  const btn = document.getElementById('dl-cert-btn'); const old = btn ? btn.textContent : '';
+  if (btn) { btn.textContent = 'Preparing...'; btn.disabled = true; }
+  window.html2canvas(node, { backgroundColor: '#fffaf0', scale: 2, useCORS: true }).then(canvas => {
+    const a = document.createElement('a'); a.download = 'certificate.png'; a.href = canvas.toDataURL('image/png'); a.click();
+    if (btn) { btn.textContent = old; btn.disabled = false; }
+  }).catch(() => { if (btn) { btn.textContent = old; btn.disabled = false; } });
+}
 
 /* ═══════════ experience: lock → 3 gifts (cake, certificate, photos + letter) ═══════════ */
 (function () {
   const s = document.createElement('style');
   s.textContent = `
-  .x{min-height:100vh;font-family:'Inter',sans-serif;position:relative;overflow:hidden;color:#fff}
-  .x-maroon{background:radial-gradient(110% 70% at 20% 0,#b3234d 0,transparent 55%),radial-gradient(90% 70% at 100% 100%,#3d0616 0,transparent 60%),linear-gradient(145deg,#6b0f2a,#8b1538 45%,#3f0716)}
-  .x-maroon::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.2) 0,rgba(255,255,255,.04) 34%,transparent 35%),radial-gradient(60% 35% at 25% 0,rgba(255,255,255,.2),transparent)}
-  .x-fest{background:radial-gradient(circle at 12% 18%,#ff7eb3 0,transparent 34%),radial-gradient(circle at 88% 28%,#ffb84d 0,transparent 34%),radial-gradient(circle at 50% 105%,#8e5cf7 0,transparent 46%),linear-gradient(160deg,#6b0f2a,#8b1538)}
-  .x-board{background:radial-gradient(circle at 10% 8%,#ff9ec4 0,transparent 34%),radial-gradient(circle at 92% 38%,#ffc27a 0,transparent 32%),radial-gradient(circle at 25% 92%,#9b5de5 0,transparent 40%),linear-gradient(160deg,#4a0818,#8b1538)}
+  .x{min-height:100vh;font-family:'Inter',sans-serif;position:relative;overflow:hidden;color:var(--ink)}
+  .x-maroon{background-color:#FBE4E8;background-image:radial-gradient(rgba(34,27,22,.08) 1.5px, transparent 1.5px);background-size:20px 20px}
+  .x-fest{background-color:#FFF3D6;background-image:radial-gradient(rgba(34,27,22,.08) 1.5px, transparent 1.5px);background-size:20px 20px}
+  .x-board{background-color:#FFF8EF;background-image:radial-gradient(rgba(34,27,22,.08) 1.5px, transparent 1.5px);background-size:20px 20px}
   .x-in{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 16px;text-align:center;animation:xf .6s ease both}
-  .x-lock{display:grid;grid-template-columns:repeat(2,minmax(0,310px));gap:30px;justify-content:center;width:100%}
-  @media(max-width:680px){.x-lock{grid-template-columns:minmax(0,310px)}}
-  .x-panel{height:420px;border-radius:26px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,rgba(255,255,255,.28),rgba(255,255,255,.05) 45%,rgba(0,0,0,.2));border:1px solid rgba(255,255,255,.38);box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 26px 50px -18px rgba(0,0,0,.65);backdrop-filter:blur(6px)}
-  .x-photo{width:100%;height:100%;object-fit:cover;border-radius:16px;border:6px solid #fff8f0;box-shadow:0 10px 24px rgba(0,0,0,.4);background:#e9d5cc}
-  .x-key{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.6),rgba(255,255,255,.1) 55%,rgba(0,0,0,.25));border:1px solid rgba(255,255,255,.45);color:#fff;font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;transition:transform .1s;text-shadow:0 1px 2px rgba(0,0,0,.4)}
-  .x-key:active{transform:scale(.9)}
-  .x-dot{width:13px;height:13px;border-radius:50%;border:1.5px solid #ffd58a;transition:.15s}.x-dot.on{background:#ffd58a;box-shadow:0 0 8px #ffd58a}
-  .x-btn{padding:13px 32px;border-radius:30px;font-weight:700;font-size:13px;letter-spacing:.6px;border:0;cursor:pointer;color:#5a0f24;background:linear-gradient(135deg,#ffe29a,#f5a94a);box-shadow:0 8px 20px -6px rgba(245,169,74,.7);font-family:inherit;transition:transform .15s}
-  .x-btn:hover{transform:scale(1.05)}
+  .x-lock{display:grid;grid-template-columns:repeat(2,minmax(0,300px));gap:30px;justify-content:center;width:100%;align-items:center}
+  @media(max-width:680px){.x-lock{grid-template-columns:minmax(0,300px)}}
+  .lock-photo{position:relative;background:var(--paper);border:3px solid var(--ink);border-radius:20px;padding:10px;box-shadow:var(--shadow-lg);transform:rotate(-3deg);height:340px}
+  .lock-photo img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block}
+  .lock-card{background:var(--paper);border:3px solid var(--ink);border-radius:22px;box-shadow:var(--shadow-lg);padding:30px 22px;display:flex;flex-direction:column;align-items:center;transform:rotate(1.5deg)}
+  .lock-icon{font-size:30px;margin-bottom:6px;animation:xb 2s ease-in-out infinite}
+  .keypad{display:grid;grid-template-columns:repeat(3,64px);gap:12px;margin-top:6px}
+  .key{width:64px;height:64px;border-radius:16px;background:var(--paper);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px;color:var(--ink);cursor:pointer;transition:transform .08s,box-shadow .08s;user-select:none}
+  .key:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink);background:var(--accent);color:#fff}
+  .x-dot{width:16px;height:16px;border-radius:6px;border:2.5px solid var(--ink);background:transparent;transition:.15s}
+  .x-dot.on{background:var(--accent)}
+  .tape{position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(-3deg);width:64px;height:24px;background:rgba(247,201,210,.9);border:2px solid var(--ink);border-radius:3px;z-index:2}
+  .x-btn{padding:13px 30px;border-radius:14px;font-weight:700;font-size:13px;letter-spacing:.4px;border:3px solid var(--ink);cursor:pointer;color:var(--ink);background:var(--mustard);box-shadow:var(--shadow);font-family:'Space Grotesk',sans-serif;transition:transform .1s,box-shadow .1s}
+  .x-btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink)}
+  .x-btn:disabled{opacity:.55;cursor:not-allowed}
   .x-h{font-family:'Fraunces',serif;font-style:italic}
-  .x-mute{position:fixed;top:14px;right:14px;z-index:50;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;box-shadow:0 4px 12px rgba(0,0,0,.3)}
-  .x-gift{cursor:pointer}.x-gift.go{animation:xb 1.8s ease-in-out infinite}.x-gift.lk{opacity:.5}
+  .x-mute{position:fixed;top:14px;right:14px;z-index:50;width:38px;height:38px;border-radius:12px;background:var(--paper);border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;box-shadow:3px 3px 0 var(--ink)}
+  .x-gift{cursor:pointer}.x-gift.go{animation:xb 1.8s ease-in-out infinite}.x-gift.lk{opacity:.45}
   .fl{transform-box:fill-box;transform-origin:50% 100%;animation:xfl .5s ease-in-out infinite}
   .out .fl{opacity:0;animation:none;transform:scale(0);transition:.5s}.sm{opacity:0}.out .sm{animation:xsm 1.8s ease-out both}
   .show{animation:xp .8s cubic-bezier(.2,1.4,.4,1) both}
-  .x-cert{background:linear-gradient(145deg,#fffaf0,#fbeed2);color:#5a0f24;max-width:520px;width:100%;padding:34px 26px;border-radius:6px;box-shadow:0 0 0 8px #fff9ee,0 0 0 11px #c9962b,0 30px 60px -16px rgba(0,0,0,.6);animation:xp .8s ease both}
-  .x-pin{break-inside:avoid;margin-bottom:16px;background:#fff8f0;padding:8px 8px 10px;border-radius:12px;box-shadow:0 14px 26px -12px rgba(0,0,0,.6);animation:xf .8s ease both;color:#5a0f24}
-  .x-pin img{width:100%;display:block;border-radius:8px;object-fit:cover;background:#ecd9cf}
-  .x-letter{max-width:540px;width:100%;margin-top:34px;padding:34px 28px;border-radius:6px;text-align:left;color:#3a2228;background:repeating-linear-gradient(#fff8ec 0,#fff8ec 34px,#f1dfd0 35px);box-shadow:0 26px 55px -18px rgba(0,0,0,.65);border-left:4px solid #c2185b}
-  #tx{font-family:'Kalam',cursive;font-size:19px;line-height:35px;white-space:pre-wrap;min-height:140px;cursor:pointer}
-  #tx.typing::after{content:'▍';color:#8b1538;animation:xbl .8s steps(1) infinite}
-  .x-pill{display:none;position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:40;padding:12px 28px;border-radius:999px;background:#241f2e;color:#ffd58a;border:1px solid #ffd58a99;font-weight:600;font-size:13px;cursor:pointer;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
+  .x-cert{position:relative;background:linear-gradient(145deg,#fffaf0,#fbeed2);color:#3a2228;max-width:520px;width:100%;padding:34px 26px;border-radius:8px;border:3px solid var(--ink);box-shadow:var(--shadow-lg);animation:xp .8s ease both}
+  .scrap-grid{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;max-width:640px;margin:0 auto 8px}
+  .scrap-card{position:relative;width:190px;background:var(--paper);border:3px solid var(--ink);border-radius:12px;padding:10px 10px 14px;box-shadow:var(--shadow);animation:xf .7s ease both}
+  .scrap-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;border:2px solid var(--ink);background:#e9d9cf;display:block}
+  .scrap-cap{font-family:'Kalam',cursive;font-size:14px;margin-top:9px;text-align:center;color:var(--ink)}
+  .x-letter{position:relative;max-width:540px;width:100%;margin-top:30px;padding:32px 26px;border-radius:10px;text-align:left;color:#3a2228;background:repeating-linear-gradient(#fff8ec 0,#fff8ec 34px,#f1dfd0 35px);box-shadow:var(--shadow-lg);border:3px solid var(--ink)}
+  #tx{font-family:'Kalam',cursive;font-size:19px;line-height:35px;white-space:pre-wrap;min-height:100px}
+  .x-pill{display:inline-block;margin-top:26px;padding:13px 30px;border-radius:999px;background:var(--ink);color:#ffd58a;border:3px solid var(--ink);font-weight:700;font-size:13px;cursor:pointer;font-family:'Space Grotesk',sans-serif;box-shadow:3px 3px 0 var(--accent)}
   @keyframes xf{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   @keyframes xs{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
-  @keyframes xb{50%{transform:translateY(-9px)}}
+  @keyframes xb{50%{transform:translateY(-8px)}}
   @keyframes xfl{50%{transform:scale(.88,1.14)}}
   @keyframes xp{0%{opacity:0;transform:scale(.3)}70%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
-  @keyframes xbl{50%{opacity:0}}
   @keyframes xsm{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-44px)}}`;
   document.head.appendChild(s);
 })();
@@ -332,33 +333,33 @@ function renderExperience(el, data, opts) {
   opts = opts || {};
   const P = data.photos || [], esc = t => String(t || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
   const nm = esc(data.recipient), sn = esc(data.sender), $ = q => el.querySelector(q);
+  const accent = data.forType === 'boyfriend' ? 'var(--denim)' : 'var(--rose)';
+  const certTitle = data.forType === 'boyfriend' ? 'BEST BOYFRIEND' : 'BEST GIRLFRIEND';
   let scene = 'locked', pin = '', opened = 0, snd = true, ac = null, timer = null;
 
   /* sound */
   function A() { try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === 'suspended') ac.resume(); return ac; } catch (e) { return null; } }
   function tone(f, d, delay) { const c = A(); if (!c || !snd) return; const o = c.createOscillator(), g = c.createGain(), t = c.currentTime + (delay || 0); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(.001, t); g.gain.exponentialRampToValueAtTime(.1, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + d + .02); }
   function noise(dur, freq, q, vol) { const c = A(); if (!c || !snd) return; const n = c.sampleRate * dur | 0, b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0); for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3); const s = c.createBufferSource(); s.buffer = b; const f = c.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = freq; f.Q.value = q; const g = c.createGain(); g.gain.value = vol; s.connect(f); f.connect(g); g.connect(c.destination); s.start(); }
-  const clack = sp => { noise(.035, sp ? 700 : 2000 + Math.random() * 1200, 1.5, sp ? .3 : .55); tone(sp ? 110 : 170 + Math.random() * 50, .05); };
 
   function set(html, cls) {
-    clearTimeout(timer); el.className = 'x ' + cls;
+    clearTimeout(timer); el.className = 'x ' + cls; el.style.setProperty('--accent', accent);
     el.innerHTML = html + `<div class="x-mute" id="mu">${snd ? '🔊' : '🔇'}</div>`;
     $('#mu').onclick = () => { snd = !snd; $('#mu').textContent = snd ? '🔊' : '🔇'; };
     window.scrollTo(0, 0);
   }
   const go = (sc, n) => { if (n !== undefined) opened = n; scene = sc; draw(); };
-  const nextBtn = (n) => `<button class="x-btn" id="nx" style="margin-top:26px">Next gift →</button>`;
 
   /* 1 · lock */
   function lock() {
-    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'].map(k => k === '' ? '<div></div>' : `<div class="x-key" data-k="${k}">${k}</div>`).join('');
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'].map(k => k === '' ? '<div></div>' : `<div class="key" data-k="${k}">${k}</div>`).join('');
     set(`<div class="x-in"><div class="x-lock">
-      <div class="x-panel"><img class="x-photo" src="${P[0] || ''}" /></div>
-      <div class="x-panel" id="kp"><div class="x-h" style="font-size:26px;margin-bottom:14px">For ${nm}</div>
+      <div class="lock-photo"><span class="tape"></span><img src="${P[0] || ''}" /></div>
+      <div class="lock-card"><div class="lock-icon">🔒</div><div class="x-h" style="font-size:25px;margin-bottom:14px">For ${nm}</div>
         <div style="display:flex;gap:10px;margin-bottom:18px">${[0, 1, 2, 3].map(() => '<div class="x-dot"></div>').join('')}</div>
-        <div style="display:grid;grid-template-columns:repeat(3,64px);gap:12px">${keys}</div>
-        ${data.hint ? `<p style="font-size:12px;opacity:.8;margin-top:14px">hint: ${esc(data.hint)}</p>` : ''}</div></div>
-      ${opts.preview ? '<p id="skip" style="font-size:11px;opacity:.6;margin-top:18px;cursor:pointer;text-decoration:underline">skip (preview only)</p>' : ''}</div>`, 'x-maroon');
+        <div class="keypad">${keys}</div>
+        ${data.hint ? `<p style="font-size:12px;opacity:.75;margin-top:14px;font-family:'Space Grotesk',sans-serif">hint: ${esc(data.hint)}</p>` : ''}</div></div>
+      ${opts.preview ? '<p id="skip" style="font-size:11px;opacity:.55;margin-top:18px;cursor:pointer;text-decoration:underline;font-family:\'Space Grotesk\',sans-serif">skip (preview only)</p>' : ''}</div>`, 'x-maroon');
     const dots = () => el.querySelectorAll('.x-dot').forEach((d, i) => d.classList.toggle('on', i < pin.length));
     el.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
       const k = b.dataset.k; tone(600 + Math.random() * 120, .07);
@@ -366,19 +367,19 @@ function renderExperience(el, data, opts) {
       dots();
       if (pin.length === 4) {
         if (pin === String(data.passcode)) { tone(660, .3); tone(880, .4, .1); setTimeout(() => go('gifts', 0), 350); }
-        else { const kp = $('#kp'); kp.style.animation = 'xs .5s'; setTimeout(() => { kp.style.animation = ''; pin = ''; dots(); }, 500); }
+        else { const kc = $('.lock-card'); kc.style.animation = 'xs .5s'; setTimeout(() => { kc.style.animation = ''; pin = ''; dots(); }, 500); }
       }
     });
     if ($('#skip')) $('#skip').onclick = () => go('gifts', 0);
   }
 
   /* 2 · gift boxes */
-  const GC = [['#ff5c8a', '#ffd166'], ['#ffb703', '#c2185b'], ['#8e5cf7', '#ffd166']];
-  const giftSVG = (i, open) => { const [a, b] = GC[i]; return `<svg viewBox="0 0 120 130" width="112" height="122"><g style="transform-origin:60px 50px;${open ? 'transform:translateY(-16px) rotate(-16deg)' : ''}"><rect x="8" y="34" width="104" height="24" rx="5" fill="${a}"/><rect x="52" y="34" width="16" height="24" fill="${b}"/><path d="M60 34C38 4 12 24 60 34C108 24 82 4 60 34Z" fill="${b}"/></g><rect x="14" y="58" width="92" height="66" rx="5" fill="${a}"/><rect x="14" y="58" width="92" height="14" fill="#000" opacity=".12"/><rect x="52" y="58" width="16" height="66" fill="${b}"/></svg>`; };
+  const GC = [['#F2A6B4', '#EF5D77'], ['#F6C445', '#F2A6B4'], ['#B9AEF0', '#8FD9B6']];
+  const giftSVG = (i, open) => { const [a, b] = GC[i]; return `<svg viewBox="0 0 120 130" width="112" height="122"><g style="transform-origin:60px 50px;${open ? 'transform:translateY(-16px) rotate(-16deg)' : ''}"><rect x="8" y="34" width="104" height="24" rx="5" fill="${a}" stroke="#221B16" stroke-width="2"/><rect x="52" y="34" width="16" height="24" fill="${b}"/><path d="M60 34C38 4 12 24 60 34C108 24 82 4 60 34Z" fill="${b}" stroke="#221B16" stroke-width="2"/></g><rect x="14" y="58" width="92" height="66" rx="5" fill="${a}" stroke="#221B16" stroke-width="2"/><rect x="14" y="58" width="92" height="14" fill="#000" opacity=".1"/><rect x="52" y="58" width="16" height="66" fill="${b}"/></svg>`; };
   function gifts() {
     const names = ['A cake', 'A certificate', 'Our moments'];
-    set(`<div class="x-in"><div class="x-h" style="font-size:36px;margin-bottom:6px">Pick your gift</div><p style="opacity:.85;font-size:14px;margin-bottom:34px">3 little gifts for you, ${nm}. Open them one by one.</p>
-      <div style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center">${[0, 1, 2].map(i => `<div class="x-gift ${i < opened ? '' : i > opened ? 'lk' : 'go'}" data-g="${i}">${giftSVG(i, i < opened)}<div style="font-size:13px;font-weight:600;margin-top:6px">${i < opened ? '✓ ' + names[i] : i > opened ? '🔒 Gift ' + (i + 1) : 'Gift ' + (i + 1) + ' — tap!'}</div></div>`).join('')}</div></div>`, 'x-fest');
+    set(`<div class="x-in"><div class="x-h" style="font-size:34px;margin-bottom:6px">Pick your gift</div><p style="opacity:.8;font-size:14px;margin-bottom:34px;font-family:'Space Grotesk',sans-serif">3 little gifts for you, ${nm}. Open them one by one.</p>
+      <div style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center">${[0, 1, 2].map(i => `<div class="x-gift ${i < opened ? '' : i > opened ? 'lk' : 'go'}" data-g="${i}">${giftSVG(i, i < opened)}<div style="font-size:13px;font-weight:700;margin-top:6px;font-family:'Space Grotesk',sans-serif">${i < opened ? '✓ ' + names[i] : i > opened ? '🔒 Gift ' + (i + 1) : 'Gift ' + (i + 1) + ' — tap!'}</div></div>`).join('')}</div></div>`, 'x-fest');
     el.querySelectorAll('[data-g]').forEach(g => g.onclick = () => {
       const i = +g.dataset.g;
       if (i === opened) { tone(520, .15); tone(780, .25, .08); go(['cake', 'cert', 'memo'][i]); }
@@ -388,16 +389,15 @@ function renderExperience(el, data, opts) {
 
   /* 3 · cake */
   function cakeSVG() {
-    const xs = [78, 99, 120, 141, 162], cc = ['#ff5c8a', '#4cc9f0', '#ffd166', '#8e5cf7', '#06d6a0'];
-    return `<div id="ck"><svg viewBox="0 0 240 250" width="280" height="290"><ellipse cx="120" cy="230" rx="114" ry="14" fill="#f6e3c5"/>
-    <rect x="26" y="150" width="188" height="76" rx="12" fill="#b3234d"/><rect x="26" y="150" width="188" height="16" rx="8" fill="#ff8fb3"/>${[44, 80, 116, 152, 190].map(x => `<circle cx="${x}" cy="168" r="7" fill="#ff8fb3"/>`).join('')}
-    <rect x="62" y="106" width="116" height="48" rx="10" fill="#ff5c8a"/><rect x="62" y="106" width="116" height="14" rx="7" fill="#ffd1e0"/>
-    ${[[50, 200, '#ffd166'], [80, 212, '#4cc9f0'], [120, 205, '#fff'], [160, 212, '#ffd166'], [190, 200, '#4cc9f0'], [90, 135, '#fff'], [150, 138, '#ffd166']].map(([x, y, c]) => `<circle cx="${x}" cy="${y > 190 ? y : y}" r="2.5" fill="${c}"/>`).join('')}
-    ${xs.map((x, i) => `<rect x="${x - 4}" y="72" width="8" height="34" rx="2" fill="${cc[i]}"/><path class="fl" d="M${x} 46C${x + 9} 58 ${x + 7} 70 ${x} 70C${x - 7} 70 ${x - 9} 58 ${x} 46Z" fill="#ffb703"/><ellipse class="fl" cx="${x}" cy="63" rx="3" ry="5" fill="#fff3b0"/><circle class="sm" cx="${x}" cy="56" r="4" fill="#ddd"/>`).join('')}</svg></div>`;
+    const xs = [78, 99, 120, 141, 162], cc = ['#EF5D77', '#3E7CB1', '#F6C445', '#B9AEF0', '#8FD9B6'];
+    return `<div id="ck"><svg viewBox="0 0 240 250" width="280" height="290"><ellipse cx="120" cy="230" rx="114" ry="14" fill="#F1E4CE"/>
+    <rect x="26" y="150" width="188" height="76" rx="12" fill="#EF5D77" stroke="#221B16" stroke-width="2.5"/><rect x="26" y="150" width="188" height="16" rx="8" fill="#F7C9D2"/>${[44, 80, 116, 152, 190].map(x => `<circle cx="${x}" cy="168" r="7" fill="#F7C9D2" stroke="#221B16" stroke-width="1.5"/>`).join('')}
+    <rect x="62" y="106" width="116" height="48" rx="10" fill="#F6C445" stroke="#221B16" stroke-width="2.5"/><rect x="62" y="106" width="116" height="14" rx="7" fill="#FCE7A8"/>
+    ${xs.map((x, i) => `<rect x="${x - 4}" y="72" width="8" height="34" rx="2" fill="${cc[i]}" stroke="#221B16" stroke-width="1.5"/><path class="fl" d="M${x} 46C${x + 9} 58 ${x + 7} 70 ${x} 70C${x - 7} 70 ${x - 9} 58 ${x} 46Z" fill="#F6C445" stroke="#221B16" stroke-width="1"/><ellipse class="fl" cx="${x}" cy="63" rx="3" ry="5" fill="#fff3b0"/><circle class="sm" cx="${x}" cy="56" r="4" fill="#ddd"/>`).join('')}</svg></div>`;
   }
   function cake() {
-    set(`<div class="x-in"><div class="x-h" style="font-size:30px;margin-bottom:8px">Gift 1 · a cake for ${nm}</div>${cakeSVG()}
-      <div id="wish" class="x-h" style="font-size:36px;color:#ffe29a;height:48px;opacity:0;margin-top:6px">✨ Make a wish ✨</div>
+    set(`<div class="x-in"><div class="x-h" style="font-size:28px;margin-bottom:8px">Gift 1 · a cake for ${nm}</div>${cakeSVG()}
+      <div id="wish" class="x-h" style="font-size:34px;color:var(--accent);height:48px;opacity:0;margin-top:6px">✨ Make a wish ✨</div>
       <button class="x-btn" id="blow" style="margin-top:14px">Blow 💨</button></div>`, 'x-fest');
     $('#blow').onclick = function () {
       $('#ck').classList.add('out'); noise(.9, 650, .4, .7); tone(523, .4, .9); tone(659, .4, 1.05); tone(784, .7, 1.2);
@@ -409,38 +409,39 @@ function renderExperience(el, data, opts) {
   /* 4 · certificate */
   function cert() {
     const dt = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
-    set(`<div class="x-in"><div class="x-h" style="font-size:28px;margin-bottom:24px">Gift 2 · something official</div>
-      <div class="x-cert"><div style="letter-spacing:6px;font-size:11px;font-weight:600;color:#a8762a">CERTIFICATE OF LOVE</div>
-        <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:40px;line-height:1.1;margin:14px 0 4px;background:linear-gradient(90deg,#8b1538,#c2185b,#c9962b);-webkit-background-clip:text;background-clip:text;color:transparent">BEST GF / BF</div>
+    set(`<div class="x-in"><div class="x-h" style="font-size:27px;margin-bottom:22px">Gift 2 · something official</div>
+      <div class="x-cert" id="cert-node"><div style="letter-spacing:6px;font-size:11px;font-weight:600;color:#a8762a">CERTIFICATE OF LOVE</div>
+        <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:36px;line-height:1.1;margin:14px 0 4px;color:${data.forType === 'boyfriend' ? '#3E7CB1' : '#EF5D77'}">${certTitle}</div>
         <div style="font-size:13px;color:#8a5d55">in the whole wide world</div>
         <div style="font-size:12px;letter-spacing:2px;margin:22px 0 4px;color:#a8762a">PROUDLY PRESENTED TO</div>
-        <div style="font-family:'Great Vibes',cursive;font-size:54px;line-height:1.15;color:#8b1538;word-break:break-word">${nm}</div>
+        <div style="font-family:'Great Vibes',cursive;font-size:52px;line-height:1.15;color:#8b1538;word-break:break-word">${nm}</div>
         <p style="font-family:'Kalam',cursive;font-size:16px;margin:12px auto 22px;max-width:380px;line-height:1.6;color:#5a3a3a">for being endlessly caring, wonderfully annoying, and the reason behind my best smiles. Officially certified. No returns, no refunds.</p>
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
-          <div style="text-align:center;flex:1"><div style="font-family:'Great Vibes',cursive;font-size:30px;border-bottom:1.5px solid #c9962b;padding:0 8px">${sn}</div><div style="font-size:10px;letter-spacing:1.5px;margin-top:4px;color:#a8762a">SIGNED</div></div>
-          <svg viewBox="0 0 80 80" width="76"><circle cx="40" cy="40" r="34" fill="#e0a526" stroke="#b5771a" stroke-width="4"/><circle cx="40" cy="40" r="26" fill="none" stroke="#fff6d6" stroke-dasharray="3 3"/><path d="M40 20l6.500 13.500 14.500 2-10.500 10 2.600 14.500L40 53.300 27 60l2.600-14.500L19 35.500l14.500-2z" fill="#fff6d6"/></svg>
-          <div style="text-align:center;flex:1"><div style="font-size:13px;border-bottom:1.5px solid #c9962b;padding:6px 8px 5px">${dt}</div><div style="font-size:10px;letter-spacing:1.5px;margin-top:4px;color:#a8762a">DATE</div></div></div></div>
-      ${nextBtn()}</div>`, 'x-maroon');
+          <div style="text-align:center;flex:1"><div style="font-family:'Great Vibes',cursive;font-size:28px;border-bottom:1.5px solid #c9962b;padding:0 8px">${sn}</div><div style="font-size:10px;letter-spacing:1.5px;margin-top:4px;color:#a8762a">SIGNED</div></div>
+          <svg viewBox="0 0 80 80" width="70"><circle cx="40" cy="40" r="34" fill="#e0a526" stroke="#b5771a" stroke-width="4"/><circle cx="40" cy="40" r="26" fill="none" stroke="#fff6d6" stroke-dasharray="3 3"/><path d="M40 20l6.500 13.500 14.500 2-10.500 10 2.600 14.500L40 53.300 27 60l2.600-14.500L19 35.500l14.500-2z" fill="#fff6d6"/></svg>
+          <div style="text-align:center;flex:1"><div style="font-size:12px;border-bottom:1.5px solid #c9962b;padding:6px 8px 5px">${dt}</div><div style="font-size:10px;letter-spacing:1.5px;margin-top:4px;color:#a8762a">DATE</div></div></div></div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap">
+        <button class="x-btn" id="dl-cert-btn" onclick="downloadCertificate()" style="background:var(--paper)">Download ⬇</button>
+        <button class="x-btn" id="nx">Next gift →</button>
+      </div></div>`, 'x-maroon');
     tone(523, .3); tone(659, .3, .12); tone(784, .3, .24); tone(1046, .6, .36);
     $('#nx').onclick = () => go('gifts', 2);
   }
 
   /* 5 · photos + letter */
   function memo() {
-    const ar = ['3/4', '1/1', '4/5'], rt = [-2.5, 2, -1.5], cp = ['us, always', 'my favourite day', 'never letting go'];
-    set(`<div style="position:relative;z-index:1;padding:46px 16px 120px;display:flex;flex-direction:column;align-items:center;text-align:center">
-      <div class="x-h" style="font-size:36px;margin-bottom:6px">Gift 3 · our little moments</div><p style="opacity:.8;font-size:14px;margin-bottom:26px">and a letter, just for you</p>
-      <div style="columns:2;column-gap:16px;max-width:540px;width:100%">${[0, 1, 2].map(i => `<div class="x-pin" style="transform:rotate(${rt[i]}deg);animation-delay:${i * .25}s"><img src="${P[i] || ''}" style="aspect-ratio:${ar[i]}" /><div style="font-family:'Kalam',cursive;font-size:15px;margin-top:8px">${cp[i]}</div></div>`).join('')}</div>
-      <div class="x-letter" id="lt"><div style="font-family:'Fraunces',serif;font-style:italic;font-size:26px;color:#8b1538;margin-bottom:10px">Dear ${nm},</div><div id="tx"></div>
-        <div id="sg" style="font-family:'Great Vibes',cursive;font-size:34px;color:#8b1538;margin-top:14px;text-align:right;opacity:0;transition:opacity .8s">— ${sn}</div></div>
+    const photos = [P[0] || '', 'photo.jpeg', 'photo1.jpeg'];
+    const caps = ['the smile i fell for', 'still my favourite plan: you', 'proof we make a good team'];
+    const rt = [-4, 3, -2];
+    set(`<div class="x-in" style="padding-bottom:80px">
+      <div class="x-h" style="font-size:34px;margin-bottom:6px">a few of my favourite frames</div><p style="opacity:.75;font-size:14px;margin-bottom:26px;font-family:'Space Grotesk',sans-serif">and a little letter, just for you</p>
+      <div class="scrap-grid">${photos.map((src, i) => `<div class="scrap-card" style="transform:rotate(${rt[i]}deg);animation-delay:${i * .12}s"><span class="tape"></span><img src="${src}" onerror="this.style.background='#e9d9cf'" /><div class="scrap-cap">${caps[i]}</div></div>`).join('')}</div>
+      <div class="x-letter"><span class="tape"></span><div class="font-display" style="font-size:26px;color:#8b1538;margin-bottom:10px">Dear ${nm},</div>
+        <div id="tx">${esc(data.message)}</div>
+        <div style="font-family:'Great Vibes',cursive;font-size:32px;color:#8b1538;margin-top:14px;text-align:right">— ${sn}</div></div>
       ${opts.preview ? '<div class="x-pill" id="gen">Generate Link</div>' : ''}</div>`, 'x-board');
     if ($('#gen')) $('#gen').onclick = () => opts.onGenerate && opts.onGenerate();
-    const t = $('#tx'), txt = data.message || ''; let i = 0, started = false;
-    const done = () => { clearTimeout(timer); t.textContent = txt; t.classList.remove('typing'); $('#sg').style.opacity = 1; if ($('#gen')) $('#gen').style.display = 'block'; tone(660, .5); tone(880, .7, .12); };
-    const step = () => { if (i >= txt.length) return done(); const c = txt[i++]; t.textContent = txt.slice(0, i); clack(!c.trim()); timer = setTimeout(step, /[.!?\n]/.test(c) ? 300 : c === ',' ? 160 : 34 + Math.random() * 26); };
-    const start = () => { if (started) return; started = true; t.classList.add('typing'); t.onclick = done; step(); };
-    if ('IntersectionObserver' in window) new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { o.disconnect(); setTimeout(start, 500); } }, { threshold: .5 }).observe($('#lt'));
-    else setTimeout(start, 1500);
+    tone(660, .4); tone(880, .55, .12);
   }
 
   function draw() { ({ locked: lock, gifts, cake, cert, memo })[scene](); }
