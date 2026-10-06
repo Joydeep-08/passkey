@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title> Lumina — A Little Surprise</title>
+<title>Lumina — Birthday Surprise 🎂</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Fredoka:wght@600;700&family=Great+Vibes&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Fredoka:wght@600;700&family=Great+Vibes&family=Playfair+Display:wght@600;800&family=Bowlby+One&display=swap" rel="stylesheet" />
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -53,6 +53,35 @@ body{
 #pg-loading.active,#pg-view-loading.active,#pg-view-error.active{display:flex}
 .modal-bg{position:fixed;inset:0;background:rgba(34,27,22,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
 .modal-box{background:var(--paper);border:3px solid var(--ink);border-radius:22px;width:100%;max-width:420px;padding:36px 32px;position:relative;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg)}
+
+/* ── birthday neo-brutalist skin ── */
+:root{--cream:#fff;--paper:#fff;--ink:#000;--rose:#FF4FA3;--denim:#3D5AFE;--accent:#FF4FA3;--mustard:#FFE45C;--mint:#B6F24A;--lilac:#C4B5FD;--blush:#FFC2E0;--cyan:#4FE0F0;--shadow:6px 6px 0 #000;--shadow-lg:10px 10px 0 #000}
+body{font-family:'Space Grotesk',sans-serif;background-color:#FFE45C;background-image:linear-gradient(rgba(0,0,0,.12) 2px,transparent 2px),linear-gradient(90deg,rgba(0,0,0,.12) 2px,transparent 2px);background-size:40px 40px}
+.font-brute,.font-display,.x-h{font-family:'Bowlby One',sans-serif;font-style:normal;font-weight:400}
+.card,.modal-box,.photo-slot,.x-cert,.x-letter,.scrap-card,.grow-main,.grow-secondary,.lock-photo{border-radius:0}
+.card,.modal-box{border-width:4px}
+.btn-primary,.btn-outline,.x-btn,.inp,.key{border-radius:0;border-width:4px}
+.btn-primary{background:var(--accent)}
+.photo-slot{border-width:4px;background:var(--cyan)}.photo-slot:hover{background:var(--mint)}
+select.inp{appearance:none;-webkit-appearance:none;font-weight:700;cursor:pointer;padding-right:44px;background-image:linear-gradient(45deg,transparent 50%,#000 50%),linear-gradient(135deg,#000 50%,transparent 50%);background-position:calc(100% - 24px) 55%,calc(100% - 17px) 55%;background-size:7px 7px;background-repeat:no-repeat}
+:focus-visible{outline:4px solid #000;outline-offset:3px}
+.x-maroon,.x-fest,.x-board{background-image:linear-gradient(rgba(0,0,0,.12) 2px,transparent 2px),linear-gradient(90deg,rgba(0,0,0,.12) 2px,transparent 2px);background-size:40px 40px}
+.x-maroon{background-color:var(--accent)}.x-fest{background-color:#FFE45C}.x-board{background-color:var(--cyan)}
+.x-btn{background:#fff}.x-btn.pri,#st,#nx,#blow{background:var(--accent);color:#fff}
+.tape{border-radius:0;background:#FFE45C}
+.x-letter{background:repeating-linear-gradient(#fff 0,#fff 34px,var(--lilac) 35px)}
+.grow-heading{font-family:'Bowlby One',sans-serif;font-weight:400}
+.band{position:fixed;top:0;left:0;right:0;z-index:5;background:#000;color:#FFE45C;border-bottom:4px solid #000;overflow:hidden;padding:10px 0;font-family:'Bowlby One',sans-serif;font-size:16px}
+.trk{display:flex;gap:28px;width:max-content;animation:mq 24s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+.sticker{display:inline-block;background:#000;color:#FFE45C;padding:8px 16px;font-weight:700;transform:rotate(-3deg);box-shadow:5px 5px 0 #fff}
+.wl-photo{width:150px;height:150px;object-fit:cover;border:4px solid #000;box-shadow:var(--shadow);transform:rotate(4deg);margin-top:18px;background:#fff}
+.hb{font-family:'Bowlby One',sans-serif;font-size:clamp(44px,12.5vw,104px);line-height:.98;color:#fff;-webkit-text-stroke:3px #000;paint-order:stroke fill;text-shadow:6px 6px 0 #000;margin:20px 0 22px}
+.age{display:inline-flex;align-items:center;justify-content:center;width:1.15em;height:1.15em;font-size:.5em;background:#FFE45C;color:#000;border:4px solid #000;box-shadow:5px 5px 0 #000;border-radius:50%;transform:rotate(12deg);margin-left:.35em;vertical-align:middle;text-shadow:none;-webkit-text-stroke:0}
+.wl-p{font-weight:700;max-width:360px;margin-bottom:6px}
+.cf{position:fixed;top:-24px;width:12px;height:12px;border:2px solid #000;z-index:60;pointer-events:none;animation:cf var(--d) linear forwards}
+@keyframes cf{to{transform:translateY(112vh) rotate(720deg)}}
+@media(prefers-reduced-motion:reduce){.trk,.fl,.x-gift.go,.pulse-btn,.lock-icon{animation:none}.cf{display:none}}
 </style>
 </head>
 <body>
@@ -66,31 +95,21 @@ body{
   <div class="flex items-center justify-center min-h-screen p-6">
     <div class="card w-full max-w-2xl p-10 fade-in my-10">
       <div class="mb-8">
-        <div class="font-brute" style="font-size:38px;line-height:1.15">Make it magical ✨</div>
-        <p class="text-[#6b5a52] text-sm mt-2">A locked surprise with 3 gifts inside — a cake, a certificate and your letter. Fill this in, preview it, then get a link.</p>
+        <div class="font-brute" style="font-size:38px;line-height:1.15">Make their birthday unreal 🎂</div>
+        <p class="text-[#6b5a52] text-sm mt-2">4 birthday gifts in one link: a cake to blow out, flowers, a certificate and your letter. Fill this in, preview it, get a link.</p>
       </div>
       <div class="space-y-5">
         <div>
-          <label class="block text-xs font-brute uppercase tracking-wider mb-2">This little surprise is for my *</label>
-          <div class="seg-toggle">
-            <button type="button" class="seg-btn active" data-type="girlfriend" onclick="selectType('girlfriend')">💗 Girlfriend</button>
-            <button type="button" class="seg-btn" data-type="boyfriend" onclick="selectType('boyfriend')">💙 Boyfriend</button>
-          </div>
+          <label class="block text-xs font-brute uppercase tracking-wider mb-2">This birthday surprise is for my *</label>
+          <select id="f-rel" class="inp" onchange="selectType(this.value)"></select>
         </div>
         <div><label class="block text-xs font-brute uppercase tracking-wider mb-2">Their Name *</label><input id="f-recipient" class="inp" placeholder="e.g. Ananya" /></div>
         <div><label class="block text-xs font-brute uppercase tracking-wider mb-2">Your Name *</label><input id="f-sender" class="inp" placeholder="e.g. Rohan" /></div>
-        <div>
-          <label class="block text-xs font-brute uppercase tracking-wider mb-2">4-Digit Passcode *</label>
-          <div class="flex gap-2">
-            <input maxlength="1" inputmode="numeric" class="inp pin-box" /><input maxlength="1" inputmode="numeric" class="inp pin-box" /><input maxlength="1" inputmode="numeric" class="inp pin-box" /><input maxlength="1" inputmode="numeric" class="inp pin-box" />
-          </div>
-          <p class="text-[11px] text-[#8a7268] mt-1">They'll need this to unlock it.</p>
-        </div>
-        <div><label class="block text-xs font-brute uppercase tracking-wider mb-2">Passcode Hint <span class="normal-case font-normal text-[#8a7268]">(optional)</span></label><input id="f-hint" class="inp" placeholder="e.g. the date we met" /></div>
+        <div><label class="block text-xs font-brute uppercase tracking-wider mb-2">Turning <span class="normal-case font-normal text-[#8a7268]">(optional)</span></label><input id="f-age" class="inp" inputmode="numeric" maxlength="3" placeholder="e.g. 21" /></div>
         <div>
           <label class="block text-xs font-brute uppercase tracking-wider mb-2">3 Photos *</label>
           <div class="grid grid-cols-3 gap-4">
-            <div class="photo-slot" id="slot-0" onclick="pickPhoto(0)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Photo 1<br><span class="text-[10px] opacity-70">(lock screen)</span></span></div>
+            <div class="photo-slot" id="slot-0" onclick="pickPhoto(0)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Photo 1<br><span class="text-[10px] opacity-70">(cover)</span></span></div>
             <div class="photo-slot" id="slot-1" onclick="pickPhoto(1)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Photo 2<br><span class="text-[10px] opacity-70">(certificate)</span></span></div>
             <div class="photo-slot" id="slot-2" onclick="pickPhoto(2)"><span class="text-xs font-medium text-[#5a4740] px-2 text-center">Photo 3</span></div>
           </div>
@@ -99,13 +118,9 @@ body{
         </div>
         <div>
           <label class="block text-xs font-brute uppercase tracking-wider mb-2">Your Letter *</label>
-          <textarea id="f-message" class="inp" rows="7" style="resize:vertical">I've been wanting to say this properly for a while.
-
-You make ordinary days feel like something worth keeping. Thank you for the patience, the laughs, and for being exactly who you are.
-
-This little surprise is my way of saying it — in my own words, in my own time. I'm really lucky to have you.</textarea>
+          <textarea id="f-message" class="inp" rows="7" style="resize:vertical"></textarea>
         </div>
-        <div id="form-err" class="text-[#c23b3b] text-sm hidden font-medium">Please fill in both names, a 4-digit passcode, and all 3 photos.</div>
+        <div id="form-err" class="text-[#c23b3b] text-sm hidden font-medium">Please fill in both names, all 3 photos and a letter.</div>
         <button class="btn-primary w-full mt-2 pulse-btn" onclick="gotoPreview()">Preview It →</button>
       </div>
     </div>
@@ -134,9 +149,9 @@ This little surprise is my way of saying it — in my own words, in my own time.
 <div class="modal-bg hidden" id="pay-modal">
   <div class="modal-box fade-in">
     <button onclick="closePayModal()" class="absolute top-4 right-4 text-2xl text-[#8a7268] leading-none font-bold">×</button>
-    <div class="mb-6"><div class="font-brute" style="font-size:26px">Generate Your Link</div><p class="text-xs text-[#8a7268]">Pay once — they get a locked surprise with 3 gifts, hosted forever.</p></div>
+    <div class="mb-6"><div class="font-brute" style="font-size:26px">Generate Your Link</div><p class="text-xs text-[#8a7268]">Pay once — they get a birthday surprise with 4 gifts, hosted forever.</p></div>
     <div class="card px-5 py-4 mb-5 flex justify-between items-center" style="box-shadow:var(--shadow)">
-      <div><div class="text-sm font-medium">Mended — Gift Link</div><div class="text-xs text-[#8a7268] mt-0.5">Shareable link • Hosted forever</div></div>
+      <div><div class="text-sm font-medium">Birthday Surprise Link</div><div class="text-xs text-[#8a7268] mt-0.5">Shareable link • Hosted forever</div></div>
       <div class="text-right"><div id="original-price" class="text-xs text-[#8a7268] line-through hidden">₹79</div><div id="final-price" class="text-2xl font-brute" style="color:var(--accent)">₹79</div></div>
     </div>
     <div class="mb-5">
@@ -183,7 +198,7 @@ async function loadCardFromSupabase(id) {
 }
 async function withRetry(fn, n = 4) { let e; for (let i = 0; i < n; i++) { try { return await fn(); } catch (x) { e = x; await new Promise(r => setTimeout(r, 1000 * 2 ** i)); } } throw e; }
 
-let state = { recipient: '', sender: '', passcode: '', hint: '', message: '', forType: 'girlfriend', photoFiles: [null, null, null], photoPreviewUrls: [null, null, null], finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null, draftId: null };
+let state = { recipient: '', sender: '', age: '', message: '', forType: 'girlfriend', photoFiles: [null, null, null], photoPreviewUrls: [null, null, null], finalAmount: CONFIG.BASE, couponApplied: null, shareUrl: null, draftId: null };
 let activeSlot = null, formType = 'girlfriend';
 
 function showPage(id) {
@@ -192,9 +207,11 @@ function showPage(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
+let msgTouched = false;
 function selectType(t) {
   formType = t;
-  document.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.type === t));
+  $id('f-rel').value = t;
+  if (!msgTouched) $id('f-message').value = REL[t].msg;
 }
 
 /* ── photo pick (device only) ── */
@@ -206,25 +223,23 @@ function setSlotPhoto(idx, f) {
 }
 function removePhoto(idx) {
   state.photoFiles[idx] = null; state.photoPreviewUrls[idx] = null;
-  const l = ['Photo 1<br><span class="text-[10px] opacity-70">(lock screen)</span>', 'Photo 2<br><span class="text-[10px] opacity-70">(certificate)</span>', 'Photo 3'];
+  const l = ['Photo 1<br><span class="text-[10px] opacity-70">(cover)</span>', 'Photo 2<br><span class="text-[10px] opacity-70">(certificate)</span>', 'Photo 3'];
   $id('slot-' + idx).innerHTML = `<span class="text-xs font-medium text-[#5a4740] px-2 text-center">${l[idx]}</span>`;
 }
 document.addEventListener('DOMContentLoaded', () => {
   $id('file-input').addEventListener('change', e => { const f = e.target.files[0]; if (!f || activeSlot === null) return; setSlotPhoto(activeSlot, f); e.target.value = ''; });
-  document.querySelectorAll('.pin-box').forEach((b, i, all) => {
-    b.addEventListener('input', () => { b.value = b.value.replace(/[^0-9]/g, ''); if (b.value && i < 3) all[i + 1].focus(); });
-    b.addEventListener('keydown', e => { if (e.key === 'Backspace' && !b.value && i > 0) all[i - 1].focus(); });
-  });
+  $id('f-rel').innerHTML = Object.keys(REL).map(k => `<option value="${k}">${REL[k].e} ${REL[k].l}</option>`).join('');
+  $id('f-message').addEventListener('input', () => { msgTouched = true; });
+  selectType('girlfriend');
 });
 
 /* ── form → preview ── */
 function gotoPreview() {
-  const r = $id('f-recipient').value.trim(), s = $id('f-sender').value.trim(), hint = $id('f-hint').value.trim(), message = $id('f-message').value.trim();
-  const pin = Array.from(document.querySelectorAll('.pin-box')).map(b => b.value).join('');
-  if (!r || !s || pin.length !== 4 || !state.photoFiles.every(f => f) || !message) { $id('form-err').classList.remove('hidden'); return; }
+  const r = $id('f-recipient').value.trim(), s = $id('f-sender').value.trim(), age = $id('f-age').value.replace(/\D/g, '').slice(0, 3), message = $id('f-message').value.trim();
+  if (!r || !s || !state.photoFiles.every(f => f) || !message) { $id('form-err').classList.remove('hidden'); return; }
   $id('form-err').classList.add('hidden');
-  Object.assign(state, { recipient: r, sender: s, passcode: pin, hint, message, forType: formType });
-  renderExperience($id('preview-mount'), { recipient: r, sender: s, passcode: pin, hint, message, forType: formType, photos: state.photoPreviewUrls }, { preview: true, onGenerate: startGenerateLink });
+  Object.assign(state, { recipient: r, sender: s, age, message, forType: formType });
+  renderExperience($id('preview-mount'), { recipient: r, sender: s, age, message, forType: formType, photos: state.photoPreviewUrls }, { preview: true, onGenerate: startGenerateLink });
   $id('share-banner').classList.add('hidden'); $id('watermark').style.display = 'flex';
   showPage('pg-preview');
 }
@@ -249,7 +264,7 @@ function applyCoupon() {
 function handlePay() {
   $id('pay-err').classList.add('hidden');
   if (state.finalAmount === 0) { onPaymentSuccess('free_' + Math.random().toString(36).slice(2)); return; }
-  new Razorpay({ key: CONFIG.RZP_KEY, amount: state.finalAmount, currency: 'INR', name: 'Mended', description: `Gift link for ${state.recipient}`,
+  new Razorpay({ key: CONFIG.RZP_KEY, amount: state.finalAmount, currency: 'INR', name: 'Lumina', description: `Gift link for ${state.recipient}`,
     notes: { coupon: state.couponApplied || '', recipient: state.recipient, sender: state.sender }, theme: { color: '#EF5D77' },
     handler: r => onPaymentSuccess(r.razorpay_payment_id) }).open();
 }
@@ -260,7 +275,7 @@ async function onPaymentSuccess(paymentId) {
     if (!state.draftId) state.draftId = crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now();
     const urls = [];
     for (let i = 0; i < 3; i++) urls.push(await withRetry(() => uploadPhoto(state.photoFiles[i], state.draftId, i + 1)));
-    await withRetry(() => saveCardToSupabase(state.draftId, { recipient: state.recipient, sender: state.sender, passcode: state.passcode, hint: state.hint, message: state.message, forType: state.forType, photos: urls }));
+    await withRetry(() => saveCardToSupabase(state.draftId, { recipient: state.recipient, sender: state.sender, age: state.age, message: state.message, forType: state.forType, photos: urls }));
     const shareUrl = `${location.origin}${location.pathname}?id=${state.draftId}`;
     state.shareUrl = shareUrl; closePayModal(); $id('watermark').style.display = 'none';
     document.querySelector('#share-banner span').textContent = "🎉 Your link is ready! Share it whenever you're ready.";
@@ -287,6 +302,41 @@ function downloadCertificate() {
     if (btn) { btn.textContent = old; btn.disabled = false; }
   }).catch(() => { if (btn) { btn.textContent = old; btn.disabled = false; } });
 }
+
+const REL = {
+  girlfriend: { l: "Girlfriend", e: "💗", c: "#FF4FA3", cert: "BEST GIRLFRIEND", tag: "Today is all about you.", bq: "every day with you is worth flowers.",
+    blurb: "for being endlessly caring, wonderfully annoying, and the reason behind my best smiles. Officially certified. No returns, no refunds.",
+    caps: ["the smile i fell for", "still my favourite plan: you", "proof we make a good team"],
+    msg: "Happy birthday, my love.\n\nYou make ordinary days feel like something worth keeping. Thank you for the patience, the laughs, and for being exactly who you are.\n\nThis little surprise is my way of celebrating you. I'm really lucky to have you." },
+  boyfriend: { l: "Boyfriend", e: "💙", c: "#3D5AFE", cert: "BEST BOYFRIEND", tag: "Today is all about you.", bq: "a small something for someone who deserves everything.",
+    blurb: "for being endlessly patient, annoyingly funny, and the reason behind my best smiles. Officially certified. No returns, no refunds.",
+    caps: ["the smile i fell for", "still my favourite plan: you", "proof we make a good team"],
+    msg: "Happy birthday, my love.\n\nYou make ordinary days feel like something worth keeping. Thank you for the patience, the laughs, and for being exactly who you are.\n\nThis little surprise is my way of celebrating you. I'm really lucky to have you." },
+  male_friend: { l: "Male friend", e: "🤝", c: "#14B8A6", cert: "BEST FRIEND ALIVE", tag: "Legends only get one of these.", bq: "yes, flowers. you deserve them, deal with it.",
+    blurb: "for being the loudest in the group chat, the first to show up and the last to leave. Officially certified legend. No returns, no refunds.",
+    caps: ["the chaos we call plans", "you, in your natural habitat", "proof we peaked together"],
+    msg: "Happy birthday, legend.\n\nThanks for being the friend who shows up for everything: the dumb jokes, the late nights, the real talks.\n\nHere's to another year of being a bad influence on each other. Love you, man." },
+  female_friend: { l: "Female friend", e: "👯", c: "#A855F7", cert: "BEST FRIEND EVER", tag: "Main character energy only.", bq: "a bouquet bigger than your to-do list.",
+    blurb: "for being my biggest hype woman, my emergency contact and my favourite person to overshare with. Officially certified. No returns, no refunds.",
+    caps: ["the girl who gets me", "our best (worst) photo", "proof we are iconic"],
+    msg: "Happy birthday, bestie!\n\nYou're the one I tell everything to, the one who makes every plan better. Thank you for always being there.\n\nI hope this year gives you everything you give everyone else. Love you loads." },
+  mom: { l: "Mom", e: "🌷", c: "#FF6B35", cert: "BEST MOM", tag: "Sit back, today you rest.", bq: "a small thank you for a very big heart.",
+    blurb: "for the love, the patience, the food and every sacrifice nobody thanked you for. Officially certified world's best. No returns, no refunds.",
+    caps: ["where it all started", "you, always there", "the best of me is from you"],
+    msg: "Happy birthday, Mom.\n\nEverything good in me started with you. Thank you for the love, the scolding, the food and the endless patience.\n\nI don't say it enough, but I love you more than I can say." },
+  dad: { l: "Dad", e: "🧢", c: "#16A34A", cert: "BEST DAD", tag: "You've earned this one.", bq: "you never ask for anything, so this one's on me.",
+    blurb: "for being my hero, my teacher and my biggest supporter, even when you pretend you're not emotional. Officially certified. No returns, no refunds.",
+    caps: ["my first hero", "you, doing dad things", "i got it from you"],
+    msg: "Happy birthday, Dad.\n\nYou never say much, but everything you do says it all. Thank you for working so hard and always believing in me.\n\nI hope I make you proud. Love you." },
+  brother: { l: "Brother", e: "🔥", c: "#EF4444", cert: "BEST BROTHER", tag: "Don't get used to this.", bq: "don't let it go to your head. happy birthday.",
+    blurb: "for the fights, the fun and always having my back when it counts. Officially certified. No returns, no refunds.",
+    caps: ["partner in crime", "our worst haircut era", "same chaos, different year"],
+    msg: "Happy birthday, bro.\n\nWe fight, we joke, we steal each other's stuff, but I know you've always got my back. Thanks for that.\n\nDon't let it go to your head. Love you." },
+  sister: { l: "Sister", e: "🦋", c: "#D946EF", cert: "BEST SISTER", tag: "Your day, your rules.", bq: "you're the best sister, and this is just a start.",
+    blurb: "for the fights, the secrets and always being on my side. Officially certified. No returns, no refunds.",
+    caps: ["my built-in best friend", "us, being us", "forever my partner in crime"],
+    msg: "Happy birthday, sis.\n\nThanks for being my built-in best friend, my secret keeper and my biggest supporter.\n\nI hope your year is as amazing as you are. Love you." }
+};
 
 /* ═══════════ experience: lock → 3 gifts (cake, certificate, photos + letter) ═══════════ */
 (function () {
@@ -346,15 +396,22 @@ function renderExperience(el, data, opts) {
   opts = opts || {};
   const P = data.photos || [], esc = t => String(t || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
   const nm = esc(data.recipient), sn = esc(data.sender), $ = q => el.querySelector(q);
-  const accent = data.forType === 'boyfriend' ? 'var(--denim)' : 'var(--rose)';
-  const certTitle = data.forType === 'boyfriend' ? 'BEST BOYFRIEND' : 'BEST GIRLFRIEND';
-  let scene = 'locked', pin = '', opened = 0, snd = true, ac = null, timer = null;
+  const R = REL[data.forType] || REL.girlfriend, accent = R.c, certTitle = R.cert;
+  let scene = 'welcome', opened = 0, snd = true, ac = null, timer = null;
 
   /* sound */
   function A() { try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === 'suspended') ac.resume(); return ac; } catch (e) { return null; } }
   function tone(f, d, delay) { const c = A(); if (!c || !snd) return; const o = c.createOscillator(), g = c.createGain(), t = c.currentTime + (delay || 0); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(.001, t); g.gain.exponentialRampToValueAtTime(.1, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + d + .02); }
   function noise(dur, freq, q, vol) { const c = A(); if (!c || !snd) return; const n = c.sampleRate * dur | 0, b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0); for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3); const s = c.createBufferSource(); s.buffer = b; const f = c.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = freq; f.Q.value = q; const g = c.createGain(); g.gain.value = vol; s.connect(f); f.connect(g); g.connect(c.destination); s.start(); }
 
+  function confetti() {
+    const col = ['#FF4FA3', '#FFE45C', '#4FE0F0', '#B6F24A', '#C4B5FD', '#fff'];
+    for (let i = 0; i < 46; i++) {
+      const d = document.createElement('i'); d.className = 'cf';
+      d.style.cssText = `left:${Math.random() * 100}vw;background:${col[i % 6]};--d:${(2.2 + Math.random() * 2).toFixed(2)}s;animation-delay:${(Math.random() * .6).toFixed(2)}s`;
+      el.appendChild(d); setTimeout(() => d.remove(), 5200);
+    }
+  }
   function set(html, cls) {
     clearTimeout(timer); el.className = 'x ' + cls; el.style.setProperty('--accent', accent);
     el.innerHTML = html + `<div class="x-mute" id="mu">${snd ? '🔊' : '🔇'}</div>`;
@@ -363,27 +420,16 @@ function renderExperience(el, data, opts) {
   }
   const go = (sc, n) => { if (n !== undefined) opened = n; scene = sc; draw(); };
 
-  /* 1 · lock */
-  function lock() {
-    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'].map(k => k === '' ? '<div></div>' : `<div class="key" data-k="${k}">${k}</div>`).join('');
-    set(`<div class="x-in"><div class="x-lock">
-      <div class="lock-photo"><span class="tape"></span><img src="${P[0] || ''}" /></div>
-      <div class="lock-card"><div class="lock-icon">🔒</div><div class="x-h" style="font-size:25px;margin-bottom:14px">For ${nm}</div>
-        <div style="display:flex;gap:10px;margin-bottom:18px">${[0, 1, 2, 3].map(() => '<div class="x-dot"></div>').join('')}</div>
-        <div class="keypad">${keys}</div>
-        ${data.hint ? `<p style="font-size:12px;opacity:.75;margin-top:14px;font-family:'Space Grotesk',sans-serif">hint: ${esc(data.hint)}</p>` : ''}</div></div>
-      ${opts.preview ? '<p id="skip" style="font-size:11px;opacity:.55;margin-top:18px;cursor:pointer;text-decoration:underline;font-family:\'Space Grotesk\',sans-serif">skip (preview only)</p>' : ''}</div>`, 'x-maroon');
-    const dots = () => el.querySelectorAll('.x-dot').forEach((d, i) => d.classList.toggle('on', i < pin.length));
-    el.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
-      const k = b.dataset.k; tone(600 + Math.random() * 120, .07);
-      if (k === '⌫') pin = pin.slice(0, -1); else if (pin.length < 4) pin += k;
-      dots();
-      if (pin.length === 4) {
-        if (pin === String(data.passcode)) { tone(660, .3); tone(880, .4, .1); setTimeout(() => go('gifts', 0), 350); }
-        else { const kc = $('.lock-card'); kc.style.animation = 'xs .5s'; setTimeout(() => { kc.style.animation = ''; pin = ''; dots(); }, 500); }
-      }
-    });
-    if ($('#skip')) $('#skip').onclick = () => go('gifts', 0);
+  /* 1 · welcome */
+  function welcome() {
+    const mq = Array(8).fill('<span>🎂 HAPPY BIRTHDAY</span><span>✦</span>').join('');
+    set(`<div class="band"><div class="trk">${mq}${mq}</div></div>
+      <div class="x-in" style="padding-top:90px"><div class="sticker">for my ${R.l.toLowerCase()} ${R.e}</div>
+        ${P[0] ? `<img class="wl-photo" src="${P[0]}" />` : ''}
+        <div class="hb">Happy<br>Birthday<br>${nm}${data.age ? `<span class="age">${esc(data.age)}</span>` : ''}</div>
+        <p class="wl-p">${sn} made this for you. ${R.tag}</p>
+        <button class="x-btn" id="st" style="margin-top:20px">Open your gifts 🎁</button></div>`, 'x-maroon');
+    $('#st').onclick = () => { tone(520, .15); tone(780, .25, .08); tone(1046, .4, .2); go('gifts', 0); confetti(); };
   }
 
   /* 2 · gift boxes */
@@ -391,7 +437,7 @@ function renderExperience(el, data, opts) {
   const SCENES = ['cake', 'grow', 'cert', 'memo'];
   const giftSVG = (i, open) => { const [a, b] = GC[i]; return `<svg viewBox="0 0 120 130" width="102" height="112"><g style="transform-origin:60px 50px;${open ? 'transform:translateY(-16px) rotate(-16deg)' : ''}"><rect x="8" y="34" width="104" height="24" rx="5" fill="${a}" stroke="#221B16" stroke-width="2"/><rect x="52" y="34" width="16" height="24" fill="${b}"/><path d="M60 34C38 4 12 24 60 34C108 24 82 4 60 34Z" fill="${b}" stroke="#221B16" stroke-width="2"/></g><rect x="14" y="58" width="92" height="66" rx="5" fill="${a}" stroke="#221B16" stroke-width="2"/><rect x="14" y="58" width="92" height="14" fill="#000" opacity=".1"/><rect x="52" y="58" width="16" height="66" fill="${b}"/></svg>`; };
   function gifts() {
-    const names = ['A cake', 'Growing together', 'A certificate', 'Our moments'];
+    const names = ['A cake', 'A bouquet', 'A certificate', 'Memories'];
     set(`<div class="x-in"><div class="x-h" style="font-size:32px;margin-bottom:6px">Pick your gift</div><p style="opacity:.8;font-size:14px;margin-bottom:30px;font-family:'Space Grotesk',sans-serif">4 little gifts for you, ${nm}. Open them one by one.</p>
       <div style="display:flex;gap:22px;flex-wrap:wrap;justify-content:center;max-width:520px">${[0, 1, 2, 3].map(i => `<div class="x-gift ${i < opened ? '' : i > opened ? 'lk' : 'go'}" data-g="${i}">${giftSVG(i, i < opened)}<div style="font-size:12px;font-weight:700;margin-top:6px;font-family:'Space Grotesk',sans-serif">${i < opened ? '✓ ' + names[i] : i > opened ? '🔒 Gift ' + (i + 1) : 'Gift ' + (i + 1) + ' — tap!'}</div></div>`).join('')}</div></div>`, 'x-fest');
     el.querySelectorAll('[data-g]').forEach(g => g.onclick = () => {
@@ -415,16 +461,17 @@ function renderExperience(el, data, opts) {
       <button class="x-btn" id="blow" style="margin-top:14px">Blow 💨</button></div>`, 'x-fest');
     $('#blow').onclick = function () {
       $('#ck').classList.add('out'); noise(.9, 650, .4, .7); tone(523, .4, .9); tone(659, .4, 1.05); tone(784, .7, 1.2);
-      $('#wish').classList.add('show'); this.disabled = true; this.style.opacity = .5;
+      $('#wish').classList.add('show'); confetti(); this.disabled = true; this.style.opacity = .5;
       timer = setTimeout(() => { const b = $('#blow'); if (!b) return; b.replaceWith(Object.assign(document.createElement('button'), { className: 'x-btn', id: 'nx', textContent: 'Next gift →', onclick: () => go('gifts', 1) })); $('#nx').style.marginTop = '14px'; }, 1800);
     };
   }
 
-  /* 3.5 · growing together */
+  /* 3.5 · bouquet */
   function grow() {
-    set(`<div class="x-in"><div class="grow-heading">Growing together 🌱</div>
-      <div class="grow-stack"><div class="grow-main"><img src="photo.jpeg" onerror="this.style.background='#e9d9cf'" /></div><div class="grow-secondary"><img src="download.png" onerror="this.style.background='#e9d9cf'" /></div></div>
-      <p style="opacity:.75;font-size:14px;margin-bottom:10px;font-family:'Kalam',cursive;font-size:17px">every little season with you, ${nm} — worth it.</p>
+    const duo = data.forType === 'girlfriend' || data.forType === 'boyfriend';
+    set(`<div class="x-in"><div class="grow-heading">Flowers for you 💐</div>
+      <div class="grow-stack"><div class="grow-main"><img src="photo.jpeg" onerror="this.style.background='#e9d9cf'" /></div>${duo ? '<div class="grow-secondary"><img src="download.png" onerror="this.style.background=\'#e9d9cf\'" /></div>' : ''}</div>
+      <p style="font-family:'Kalam',cursive;font-size:18px;margin-bottom:10px;font-weight:700">${R.bq}</p>
       <button class="x-btn" id="nx" style="margin-top:14px">Next gift →</button></div>`, 'x-fest');
     tone(494, .3); tone(622, .35, .12); tone(740, .4, .24);
     $('#nx').onclick = () => go('gifts', 2);
@@ -434,12 +481,12 @@ function renderExperience(el, data, opts) {
   function cert() {
     const dt = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
     set(`<div class="x-in"><div class="x-h" style="font-size:27px;margin-bottom:22px">Gift 2 · something official</div>
-      <div class="x-cert" id="cert-node"><img class="cert-photo" src="${P[1] || P[0] || ''}" crossorigin="anonymous" /><div style="letter-spacing:6px;font-size:11px;font-weight:600;color:#a8762a">CERTIFICATE OF LOVE</div>
-        <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:36px;line-height:1.1;margin:14px 0 4px;color:${data.forType === 'boyfriend' ? '#3E7CB1' : '#EF5D77'}">${certTitle}</div>
+      <div class="x-cert" id="cert-node"><img class="cert-photo" src="${P[1] || P[0] || ''}" crossorigin="anonymous" /><div style="letter-spacing:6px;font-size:11px;font-weight:600;color:#a8762a">BIRTHDAY CERTIFICATE</div>
+        <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:36px;line-height:1.1;margin:14px 0 4px;color:${R.c}">${certTitle}</div>
         <div style="font-size:13px;color:#8a5d55">in the whole wide world</div>
         <div style="font-size:12px;letter-spacing:2px;margin:22px 0 4px;color:#a8762a">PROUDLY PRESENTED TO</div>
         <div style="font-family:'Great Vibes',cursive;font-size:52px;line-height:1.15;color:#8b1538;word-break:break-word">${nm}</div>
-        <p style="font-family:'Kalam',cursive;font-size:16px;margin:12px auto 22px;max-width:380px;line-height:1.6;color:#5a3a3a">for being endlessly caring, wonderfully annoying, and the reason behind my best smiles. Officially certified. No returns, no refunds.</p>
+        <p style="font-family:'Kalam',cursive;font-size:16px;margin:12px auto 22px;max-width:380px;line-height:1.6;color:#5a3a3a">${R.blurb}</p>
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
           <div style="text-align:center;flex:1"><div style="font-family:'Great Vibes',cursive;font-size:28px;border-bottom:1.5px solid #c9962b;padding:0 8px">${sn}</div><div style="font-size:10px;letter-spacing:1.5px;margin-top:4px;color:#a8762a">SIGNED</div></div>
           <svg viewBox="0 0 80 80" width="70"><circle cx="40" cy="40" r="34" fill="#e0a526" stroke="#b5771a" stroke-width="4"/><circle cx="40" cy="40" r="26" fill="none" stroke="#fff6d6" stroke-dasharray="3 3"/><path d="M40 20l6.500 13.500 14.500 2-10.500 10 2.600 14.500L40 53.300 27 60l2.600-14.500L19 35.500l14.500-2z" fill="#fff6d6"/></svg>
@@ -455,7 +502,7 @@ function renderExperience(el, data, opts) {
   /* 5 · photos + letter */
   function memo() {
     const photos = [P[0] || '', P[1] || '', P[2] || ''];
-    const caps = ['the smile i fell for', 'still my favourite plan: you', 'proof we make a good team'];
+    const caps = R.caps;
     const rt = [-4, 3, -2];
     set(`<div class="x-in" style="padding-bottom:80px">
       <div class="x-h" style="font-size:34px;margin-bottom:6px">a few of my favourite frames</div><p style="opacity:.75;font-size:14px;margin-bottom:26px;font-family:'Space Grotesk',sans-serif">and a little letter, just for you</p>
@@ -468,7 +515,7 @@ function renderExperience(el, data, opts) {
     tone(660, .4); tone(880, .55, .12);
   }
 
-  function draw() { ({ locked: lock, gifts, cake, grow, cert, memo })[scene](); }
+  function draw() { ({ welcome, gifts, cake, grow, cert, memo })[scene](); }
   draw();
 }
 
